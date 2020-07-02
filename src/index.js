@@ -56,8 +56,7 @@ const createWindow = () => {
 
     fs.writeFile(dataPath,JSON.stringify(database), function(err,result){if(err){console.log(err)}});
 
-    console.log(JSON.stringify(database));
-
+    addGroupWindow.close();
   })
 };
 
