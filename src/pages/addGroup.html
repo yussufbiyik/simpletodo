@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New TODO Group</title>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../assets/custom/style.css">
+
+    <!-- UIkit CSS -->
+    <link rel="stylesheet" href="../assets/uikit/css/uikit.min.css" />
+
+    <!-- UIkit JS -->
+    <script src="../assets/uikit/js/uikit.min.js"></script>
+    <script src="../assets/uikit/js/uikit-icons.min.js"></script>
+
+</head>
+<body class="hide-overflow">
+    <div class="uk-container uk-text-left">
+    <form>
+        <fieldset class="uk-fieldset">
+            <div class="uk-margin">
+                <label class="uk-form-label" for="form-stacked-text">Group Name<hr></label>
+                <input class="uk-input" id="groupName" type="text">
+            </div>
+            <div class="uk-margin">
+                <label class="uk-form-label" for="form-stacked-text">Items<hr></label>
+                <textarea class="uk-textarea" placeholder="item1,&#13;item2,&#13;item3" id="contents"></textarea>
+            </div>
+            <div class="uk-margin">
+                <input class="uk-button uk-align-left uk-margin-small-top" type="submit" value="Add">
+            </div>
+        </fieldset>
+    </form>
+    </div>
+</body>
+</html>

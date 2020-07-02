@@ -6,11 +6,11 @@
     <title>Electron TODO</title>
     
     <!-- UIkit CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.5.4/dist/css/uikit.min.css" />
+    <link rel="stylesheet" href="../assets/uikit/css/uikit.min.css" />
 
     <!-- UIkit JS -->
-    <script src="https://cdn.jsdelivr.net/npm/uikit@3.5.4/dist/js/uikit.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/uikit@3.5.4/dist/js/uikit-icons.min.js"></script>
+    <script src="../assets/uikit/js/uikit.min.js"></script>
+    <script src="../assets/uikit/js/uikit-icons.min.js"></script>
 </head>
 <body>
     <!-- Menu Begin -->
@@ -32,10 +32,7 @@
 
         <div class="uk-navbar-right">
             <div class="uk-navbar-item">
-              <a href="" class="uk-icon-button uk-button-primary uk-hidden@l" uk-icon="plus-circle"></a>
-              <a href="" class="uk-icon-button uk-button-danger uk-margin-small-left uk-hidden@l" uk-icon="minus-circle"></a>
-              <button class="uk-button uk-button-primary uk-visible@l">Add</button>
-              <button class="uk-button uk-button-danger uk-margin-small-left uk-visible@l">Delete All</button>
+              <a id="groupAddBtn" class="uk-icon uk-text-primary" uk-icon="plus-circle"></a>
             </div>
         </div>
         
@@ -63,22 +60,40 @@
                             <li>List item 3</li>
                         </ul>
                         <div class="uk-align-right">
-                          <a href="" class="uk-icon-button uk-button-primary uk-margin-small-right" uk-icon="pencil"></a>
-                          <a href="" class="uk-icon-button uk-button-danger" uk-icon="trash"></a>                        
+                          <a id="editBtn" class="uk-icon-button uk-button-primary uk-margin-small-right" uk-icon="pencil"></a>
+                          <a id="delBtn" class="uk-icon-button uk-button-danger" uk-icon="trash"></a>                        
                         </div>                  
                     </div>
                 </div>
             </div>
-
-            <div><hr></div>
             <!-- Example Lists End -->
 
             <div><hr class="uk-divider-icon"></div>
 
             <div>
-                <a class="uk-align-right uk-icon-button" uk-icon="icon:chevron-up;ratio:2;" href="" uk-scroll></a>
+                <a class="uk-align-right uk-icon-button" uk-icon="icon: chevron-up;ratio: 2;" href="" uk-scroll></a>
             </div>
         </div>
     </div>
+
+    <script>
+        const electron = require("electron");
+        const { ipcRenderer } = electron; 
+
+        let groupAddBtn = document.querySelector("#groupAddBtn");
+        
+        let delBtn = document.querySelector("#delBtn");
+        let editBtn = document.querySelector("#editBtn");
+
+        groupAddBtn.addEventListener("click", () => {
+            ipcRenderer.send("groupAdd");
+        });
+        delBtn.addEventListener("click", () => {
+            ipcRenderer.send("delBtn");
+        });
+        editBtn.addEventListener("click", () => {
+            ipcRenderer.send("editBtn");
+        });
+    </script>
 </body>
 </html>
