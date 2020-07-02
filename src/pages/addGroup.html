@@ -29,8 +29,8 @@
                 <textarea class="uk-textarea" placeholder="item1,&#13;item2,&#13;item3" id="contents"></textarea>
             </div>
             <div class="uk-margin">
-                <button id="submit" class="uk-button uk-button-primary">Add</button>
-                <button id="cancel" class="uk-button uk-button-danger">Cancel</button>
+                <span id="submit" class="uk-button uk-button-primary">Add</span>
+                <span id="cancel" class="uk-button uk-button-danger">Cancel</span>
             </div>
         </fieldset>
     </form>
@@ -50,10 +50,10 @@
         addBtn.onclick = function() {
             const group = document.querySelector("#groupName").value;
             const items = document.querySelector("#contents").value;
-
             if(group && items){
                 ipcRenderer.send("addGroup:submit",`${group} | ${items}`)
             }else{
+                UIkit.notification.closeAll();    
                 UIkit.notification({message:"<span uk-icon='icon: warning'></span> Please fill the form!",status:'warning'});
             }
         }
