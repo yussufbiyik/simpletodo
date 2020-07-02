@@ -1,12 +1,84 @@
 <!DOCTYPE html>
-<html>
-  <head>
+<html lang="en">
+<head>
     <meta charset="UTF-8">
-    <title>Hello World!</title>
-    <link rel="stylesheet" href="index.css">
-  </head>
-  <body>
-    <h1>💖 Hello World!</h1>
-    <p>Welcome to your Electron application.</p>
-  </body>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Electron TODO</title>
+    
+    <!-- UIkit CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.5.4/dist/css/uikit.min.css" />
+
+    <!-- UIkit JS -->
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.5.4/dist/js/uikit.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.5.4/dist/js/uikit-icons.min.js"></script>
+</head>
+<body>
+    <!-- Menu Begin -->
+    <div class="uk-navbar-container" uk-navbar>
+
+        <div class="uk-navbar-left">
+          <div class="uk-navbar-item">
+            <a class="uk-navbar-toggle" uk-search-icon uk-toggle="target: .nav-overlay; animation: uk-animation-fade" href="#"></a>
+            <div class="nav-overlay uk-navbar-left uk-flex-1" hidden>
+              <div class="uk-navbar-item uk-width-expand">
+                  <form class="uk-search uk-search-navbar uk-width-1-1">
+                      <input class="uk-search-input" type="search" placeholder="Search..." autofocus>
+                  </form>
+              </div>
+              <a class="uk-navbar-toggle" uk-close uk-toggle="target: .nav-overlay; animation: uk-animation-fade" href="#"></a>
+            </div>
+          </div>
+        </div>
+
+        <div class="uk-navbar-right">
+            <div class="uk-navbar-item">
+              <a href="" class="uk-icon-button uk-button-primary uk-hidden@l" uk-icon="plus-circle"></a>
+              <a href="" class="uk-icon-button uk-button-danger uk-margin-small-left uk-hidden@l" uk-icon="minus-circle"></a>
+              <button class="uk-button uk-button-primary uk-visible@l">Add</button>
+              <button class="uk-button uk-button-danger uk-margin-small-left uk-visible@l">Delete All</button>
+            </div>
+        </div>
+        
+    </div>
+    <!-- Menu End -->
+    <div class="uk-container uk-width-2-3@s uk-margin-large-top uk-margin-large-bottom">
+        
+        <div class="uk-child-width-1-1" uk-grid>
+
+
+            <div><hr class="uk-divider-icon"></div>
+
+            <!-- Example Lists Begin -->
+            <div>
+                <div class="uk-card uk-card-default uk-card-hover uk-text-left">
+                    <div class="uk-card-header">
+                        <h3 class="uk-card-title">
+                            TODO List Name
+                        </h3>
+                    </div>
+                    <div class="uk-card-body">
+                        <ul class="uk-list uk-list-striped">
+                            <li>List item 1</li>
+                            <li>List item 2</li>
+                            <li>List item 3</li>
+                        </ul>
+                        <div class="uk-align-right">
+                          <a href="" class="uk-icon-button uk-button-primary uk-margin-small-right" uk-icon="pencil"></a>
+                          <a href="" class="uk-icon-button uk-button-danger" uk-icon="trash"></a>                        
+                        </div>                  
+                    </div>
+                </div>
+            </div>
+
+            <div><hr></div>
+            <!-- Example Lists End -->
+
+            <div><hr class="uk-divider-icon"></div>
+
+            <div>
+                <a class="uk-align-right uk-icon-button" uk-icon="icon:chevron-up;ratio:2;" href="" uk-scroll></a>
+            </div>
+        </div>
+    </div>
+</body>
 </html>
