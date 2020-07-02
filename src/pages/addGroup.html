@@ -29,10 +29,34 @@
                 <textarea class="uk-textarea" placeholder="item1,&#13;item2,&#13;item3" id="contents"></textarea>
             </div>
             <div class="uk-margin">
-                <input class="uk-button uk-align-left uk-margin-small-top" type="submit" value="Add">
+                <button id="submit" class="uk-button uk-button-primary">Add</button>
+                <button id="cancel" class="uk-button uk-button-danger">Cancel</button>
             </div>
         </fieldset>
     </form>
     </div>
+
+    <script>
+        const electron = require("electron");
+        const { ipcRenderer } = electron; 
+
+        let cancelBtn = document.querySelector("#cancel");
+        let addBtn = document.querySelector("#submit");
+
+        cancelBtn.addEventListener("click",() =>{
+            window.close()
+        });
+
+        addBtn.onclick = function() {
+            const group = document.querySelector("#groupName").value;
+            const items = document.querySelector("#contents").value;
+
+            if(group && items){
+                ipcRenderer.send("addGroup:submit",`${group} | ${items}`)
+            }else{
+                UIkit.notification({message:"<span uk-icon='icon: warning'></span> Please fill the form!",status:'warning'});
+            }
+        }
+    </script>
 </body>
 </html>

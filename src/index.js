@@ -1,5 +1,6 @@
 const { app, BrowserWindow, ipcMain, Menu } = require('electron');
 const path = require('path');
+const fs = require('fs');
 
 
 if (require('electron-squirrel-startup')) {
@@ -18,7 +19,7 @@ const createWindow = () => {
   mainWindow.loadFile(path.join(__dirname, './pages/index.html'));
 
   // Open the DevTools.
-  mainWindow.webContents.openDevTools();
+  // mainWindow.webContents.openDevTools();
 
   mainWindow.on("close", () => {
     app.quit();
@@ -29,6 +30,34 @@ const createWindow = () => {
 
   ipcMain.on("groupAdd", () => {
     createGroupWindow()
+  });
+
+  ipcMain.on("addGroup:submit", (e,data) => {
+    dataPath = path.join(__dirname, './database/todos.json');
+
+    var database = JSON.parse(fs.readFileSync(dataPath).toString());
+
+    const groupName = data.split("|")[0];
+    const items = data.split("|")[1].split(",");
+
+    const itemsObj = []
+
+    items.forEach(item => {
+      itemsObj.push(item.trim())
+    });
+
+    const dataObj = {
+      "id": database.todos.length + 1,
+      "groupName":groupName,
+      "items":itemsObj
+    }
+
+    var newDatabase = database.todos.push(dataObj);
+
+    fs.writeFile(dataPath,JSON.stringify(database), function(err,result){if(err){console.log(err)}});
+
+    console.log(JSON.stringify(database));
+
   })
 };
 
