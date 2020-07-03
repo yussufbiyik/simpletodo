@@ -43,7 +43,9 @@ const createWindow = () => {
     const itemsObj = []
 
     items.forEach(item => {
-      itemsObj.push(item.trim())
+      if(item != ""){
+        itemsObj.push(item.trim())
+      }
     });
 
     const dataObj = {
@@ -118,7 +120,8 @@ app.on('activate', () => {
 function createGroupWindow(){
   addGroupWindow = new BrowserWindow({
     width:500,
-    height:330,
+    height:280,
+    frame:false,
     resizable:false,
     webPreferences:{
       nodeIntegration:true
