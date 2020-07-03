@@ -38,42 +38,43 @@
         
     </div>
     <!-- Menu End -->
-    <div class="uk-container uk-width-2-3@s uk-margin-large-top uk-margin-large-bottom">
-        
-        <div class="uk-child-width-1-1" uk-grid>
-
+    <div class="uk-container uk-width-2-3@s uk-margin-large-top uk-margin-large-bottom" id="todolist">
 
             <div><hr class="uk-divider-icon"></div>
 
-            <!-- Example Lists Begin -->
             <div>
-                <div class="uk-card uk-card-default uk-card-hover uk-text-left">
-                    <div class="uk-card-header">
-                        <h3 class="uk-card-title">
-                            TODO List Name
-                        </h3>
-                    </div>
-                    <div class="uk-card-body">
-                        <ul class="uk-list uk-list-striped">
-                            <li>List item 1</li>
-                            <li>List item 2</li>
-                            <li>List item 3</li>
-                        </ul>
-                        <div class="uk-align-right">
-                          <a id="editBtn" class="uk-icon-button uk-button-primary uk-margin-small-right" uk-icon="pencil"></a>
-                          <a id="delBtn" class="uk-icon-button uk-button-danger" uk-icon="trash"></a>                        
-                        </div>                  
+                <h1 id="message" class="uk-h1 uk-text-danger uk-text-center"></h1>
+            </div>
+            <!-- Example Lists Begin -->
+            <div id="todoList" class="uk-child-width-1-1" uk-grid>
+                <div>
+                    <div class="uk-card uk-card-default uk-card-hover uk-text-left">
+                        <div class="uk-card-header">
+                            <h3 class="uk-card-title">
+                                TODO List Name
+                            </h3>
+                        </div>
+                        <div class="uk-card-body">
+                            <ul class="uk-list uk-list-striped">
+                                <li>List item 1</li>
+                                <li>List item 2</li>
+                                <li>List item 3</li>
+                            </ul>
+                            <div class="uk-align-right">
+                              <a id="editBtn" class="uk-icon-button uk-button-primary uk-margin-small-right" uk-icon="pencil"></a>
+                              <a id="delBtn" class="uk-icon-button uk-button-danger" uk-icon="trash"></a>                        
+                            </div>                  
+                        </div>
                     </div>
                 </div>
             </div>
             <!-- Example Lists End -->
 
-            <div><hr class="uk-divider-icon"></div>
+            <div><hr class="uk-divider-icon uk-margin-medium-top"></div>
 
             <div>
                 <a class="uk-align-right uk-icon-button" uk-icon="icon: chevron-up;ratio: 2;" href="" uk-scroll></a>
             </div>
-        </div>
     </div>
 
     <script>
@@ -85,6 +86,10 @@
         let delBtn = document.querySelector("#delBtn");
         let editBtn = document.querySelector("#editBtn");
 
+        window.onload = function(){
+            ipcRenderer.send("load:mainWindow")
+        }
+
         groupAddBtn.addEventListener("click", () => {
             ipcRenderer.send("groupAdd");
         });
@@ -94,6 +99,43 @@
         editBtn.addEventListener("click", () => {
             ipcRenderer.send("editBtn");
         });
+
+        ipcRenderer.on("send:todos", (e, data) => {
+            let database = data;
+            if(database.todos.length === 0){
+                let message = document.querySelector("#message").innerHTML = "You have no TODOs";
+            }else{
+                function items(todo){
+                    todo.items.forEach(item => {
+                        let itemLi = "<li>"+item+"</li>";
+                        return itemLi
+                    });
+                }
+                database.todos.forEach(todo => {
+                    let todoList = document.querySelector("#todoList");
+                    let todoAsHTML = 
+                    `<div>
+                    <div class='uk-card uk-card-default uk-card-hover uk-text-left'>
+                    <div class='uk-card-header'>
+                    <h3 class='uk-card-title'>
+                    ${todo.groupName}
+                    </h3>
+                    </div>
+                    <div class='uk-card-body'>
+                    <ul class='uk-list uk-list-striped'>
+                    ${items(todo)}
+                    </ul>
+                    <div class='uk-align-right'>
+                    <a id='editBtn' class='uk-icon-button uk-button-primary uk-margin-small-right' uk-icon='pencil'></a>
+                    <a id='delBtn' class='uk-icon-button uk-button-danger' uk-icon='trash'></a>                        
+                    </div>                  
+                    </div>
+                    </div>
+                    </div>`;
+                    todoList.innerHTML = todoList.innerHTML + todoAsHTML
+                });
+            }
+        })
     </script>
 </body>
 </html>

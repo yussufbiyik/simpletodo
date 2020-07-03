@@ -2,6 +2,8 @@ const { app, BrowserWindow, ipcMain, Menu } = require('electron');
 const path = require('path');
 const fs = require('fs');
 
+dataPath = path.join(__dirname, './database/todos.json');
+
 
 if (require('electron-squirrel-startup')) {
   app.quit();
@@ -21,6 +23,13 @@ const createWindow = () => {
   // Open the DevTools.
   // mainWindow.webContents.openDevTools();
 
+  ipcMain.on("load:mainWindow",() => {
+    
+    var database = JSON.parse(fs.readFileSync(dataPath).toString());
+    
+    mainWindow.webContents.send("send:todos", database);
+  })
+
   mainWindow.on("close", () => {
     app.quit();
   })
@@ -33,7 +42,6 @@ const createWindow = () => {
   });
 
   ipcMain.on("addGroup:submit", (e,data) => {
-    dataPath = path.join(__dirname, './database/todos.json');
 
     var database = JSON.parse(fs.readFileSync(dataPath).toString());
 
@@ -49,8 +57,7 @@ const createWindow = () => {
     });
 
     const dataObj = {
-      "id": database.todos.length + 1,
-      "groupName":groupName,
+      "groupName":groupName.trim(),
       "items":itemsObj
     }
 
@@ -59,6 +66,8 @@ const createWindow = () => {
     fs.writeFile(dataPath,JSON.stringify(database), function(err,result){if(err){console.log(err)}});
 
     addGroupWindow.close();
+
+    mainWindow.reload();
   })
 };
 
@@ -134,5 +143,5 @@ function createGroupWindow(){
 
   addGroupWindow.on("close", () => {
     addGroupWindow = null;
-  })
+  });
 }
