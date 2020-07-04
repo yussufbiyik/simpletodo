@@ -38,7 +38,19 @@ const createWindow = () => {
   Menu.setApplicationMenu(appMenu);
 
   ipcMain.on("groupAdd", () => {
-    createGroupWindow()
+    createGroupWindow();
+  });
+
+  ipcMain.on("editBtn",(e, data) => {
+    
+  });
+
+  ipcMain.on("delBtn",(e, data) => {
+    var database = JSON.parse(fs.readFileSync(dataPath).toString());
+    database.todos.splice(data, 1);
+    fs.writeFile(dataPath,JSON.stringify(database), function(err,result){if(err){console.log(err)}});
+    
+    mainWindow.reload()
   });
 
   ipcMain.on("addGroup:submit", (e,data) => {

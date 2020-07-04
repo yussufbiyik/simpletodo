@@ -65,6 +65,16 @@
         let ready = false;
 
         let groupAddBtn = document.querySelector("#groupAddBtn");
+        groupAddBtn.addEventListener("click", () => {
+            ipcRenderer.send("groupAdd");
+        });
+
+        function delBtn(id){
+            ipcRenderer.send("delBtn", id);
+        };
+        function editBtn(id){
+            ipcRenderer.send("editBtn", id);
+        };
         
         window.onload = function(){
             ipcRenderer.send("load:mainWindow")
@@ -75,11 +85,12 @@
             if(database.todos.length === 0){
                 let message = document.querySelector("#message").innerHTML = "You have no TODOs";
             }else{
+                var counter = 0;
                 database.todos.forEach(todo => {
                     let todoList = document.querySelector("#todoList");
                     
                     let todoAsHTML = 
-                    `<div>
+                    `<div id='${counter}'>
                     <div class='uk-card uk-card-default uk-card-hover uk-text-left'>
                     <div class='uk-card-header'>
                     <h3 class='uk-card-title'>
@@ -91,27 +102,16 @@
                     ${todo.items}
                     </ul>
                     <div class='uk-align-right'>
-                    <a id='editBtn' class='uk-icon-button uk-button-primary uk-margin-small-right' uk-icon='pencil'></a>
-                    <a id='delBtn' class='uk-icon-button uk-button-danger' uk-icon='trash'></a>                        
+                    <a onclick='editBtn(${counter})' id='editBtn' class='uk-icon-button uk-button-primary uk-margin-small-right' uk-icon='pencil'></a>
+                    <a onclick='delBtn(${counter})' id='delBtn' class='uk-icon-button uk-button-danger' uk-icon='trash'></a>                        
                     </div>                  
                     </div>
                     </div>
                     </div>`;
-                    todoList.innerHTML = todoList.innerHTML + todoAsHTML
+                    todoList.innerHTML = todoList.innerHTML + todoAsHTML;
+                    counter++;
                 });
             }
-            let delBtn = document.querySelector("#delBtn");
-            let editBtn = document.querySelector("#editBtn");
-            
-            groupAddBtn.addEventListener("click", () => {
-                ipcRenderer.send("groupAdd");
-            });
-            delBtn.addEventListener("click", () => {
-                ipcRenderer.send("delBtn");
-            });
-            editBtn.addEventListener("click", () => {
-                ipcRenderer.send("editBtn");
-            });
         })
     </script>
 </body>
