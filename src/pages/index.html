@@ -58,7 +58,7 @@
             </div>
     </div>
 
-    <script>
+<script>
         const electron = require("electron");
         const { ipcRenderer } = electron; 
 
@@ -83,7 +83,7 @@
         ipcRenderer.on("send:todos", (e, data) => {
             let database = data;
             if(database.todos.length === 0){
-                let message = document.querySelector("#message").innerHTML = "You have no TODOs";
+                let message = document.querySelector("#message").innerHTML = "Nothing to List!";
             }else{
                 var counter = 0;
                 database.todos.forEach(todo => {

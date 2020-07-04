@@ -21,7 +21,7 @@
     <form>
         <fieldset class="uk-fieldset">
             <div class="uk-margin">
-                <label class="uk-form-label" for="form-stacked-text">Group Name<hr></label>
+                <label id="currentGroup" class="uk-form-label" for="form-stacked-text">Group Name<hr></label>
                 <input class="uk-input" id="groupName" type="text">
             </div>
             <div class="uk-margin">
@@ -29,7 +29,7 @@
                 <textarea class="uk-textarea uk-height-small" placeholder="item1,&#13;item2,&#13;item3" id="contents"></textarea>
             </div>
             <div class="uk-position-bottom-left uk-position-small">
-                <span id="submit" class="uk-button uk-button-primary">Add</span>
+                <span id="submit" class="uk-button uk-button-primary">Accept</span>
                 <span id="cancel" class="uk-button uk-button-danger">Cancel</span>
             </div>
         </fieldset>
@@ -39,22 +39,46 @@
     <script>
         const electron = require("electron");
         const { ipcRenderer } = electron; 
+        const path = require('path');
+        const fs = require('fs');
 
         let cancelBtn = document.querySelector("#cancel");
-        let addBtn = document.querySelector("#submit");
+        let accptBtn = document.querySelector("#submit");
+
+        dataPath = path.join(__dirname, '../database/todos.json');
+        var database = JSON.parse(fs.readFileSync(dataPath).toString());
+        var dataID;
+
+        window.onload = function(){
+            ipcRenderer.send("load:editWindow");
+        }
+
+        ipcRenderer.on("targetGroup", (e, data) => {
+            dataID = data;
+            document.querySelector("#groupName").value = database.todos[data].groupName;
+            var todoItems = database.todos[data].items.replace(/<li>/gm,'').replace(/<\/li>/gm,',\n')
+            document.querySelector("#contents").value = todoItems.substring(0, todoItems.length -2);
+        });
 
         cancelBtn.addEventListener("click",() =>{
             window.close()
         });
 
-        addBtn.onclick = function() {
+        accptBtn.onclick = function() {
             const group = document.querySelector("#groupName").value;
             const items = document.querySelector("#contents").value;
-            if(group && items){
-                ipcRenderer.send("Group:add",`${group} | ${items}`)
+            if(group || items){
+                var todoItems = database.todos[dataID].items.replace(/<li>/gm,'').replace(/<\/li>/gm,',\n')
+                    console.log(items)
+                if(group === database.todos[dataID].groupName && items === todoItems.substring(0, todoItems.length -2)){
+                    UIkit.notification.closeAll();    
+                    UIkit.notification({message:"<span uk-icon='icon: warning'></span> No changes made!",status:'warning'});
+                }else{
+                    ipcRenderer.send("Group:edit",`${group} | ${items} | ${dataID}`)
+                }
             }else{
                 UIkit.notification.closeAll();    
-                UIkit.notification({message:"<span uk-icon='icon: warning'></span> Please fill the form!",status:'warning'});
+                UIkit.notification({message:"<span uk-icon='icon: warning'></span> Form is empty!",status:'warning'});
             }
         }
     </script>
