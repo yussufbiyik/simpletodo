@@ -69,7 +69,6 @@
             const items = document.querySelector("#contents").value;
             if(group || items){
                 var todoItems = database.todos[dataID].items.replace(/<li>/gm,'').replace(/<\/li>/gm,',\n')
-                    console.log(items)
                 if(group === database.todos[dataID].groupName && items === todoItems.substring(0, todoItems.length -2)){
                     UIkit.notification.closeAll();    
                     UIkit.notification({message:"<span uk-icon='icon: warning'></span> No changes made!",status:'warning'});
