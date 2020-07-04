@@ -46,19 +46,25 @@ const createWindow = () => {
     var database = JSON.parse(fs.readFileSync(dataPath).toString());
 
     const groupName = data.split("|")[0];
-    const items = data.split("|")[1].split(",");
+    const itemsArray = data.split("|")[1].split(",");
+    console.log(itemsArray);
 
-    const itemsObj = []
-
-    items.forEach(item => {
+    var items;
+    var counter = 0;
+    itemsArray.forEach(item => {
       if(item != ""){
-        itemsObj.push(item.trim())
+        if(counter > 0){
+          items = items + `<li>${item.trim()}</li>`;
+        }else{
+          items = `<li>${item.trim()}</li>`;
+        }
+        counter++;
       }
     });
 
     const dataObj = {
       "groupName":groupName.trim(),
-      "items":itemsObj
+      "items":items
     }
 
     var newDatabase = database.todos.push(dataObj);
