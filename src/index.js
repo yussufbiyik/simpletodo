@@ -100,7 +100,7 @@ const createWindow = () => {
     var database = JSON.parse(fs.readFileSync(dataPath).toString());
 
     const groupName = data.split("|")[0];
-    const itemsArray = data.split("|")[1].split(",");
+    const itemsArray = data.split("|")[1].split("\n");
     const priorty = data.split("|")[2];
 
     var items;
@@ -135,17 +135,23 @@ const createWindow = () => {
     var database = JSON.parse(fs.readFileSync(dataPath).toString());
 
     var currentID = 0;
+    var results = [];
+    var found = false;
     database.todos.some(function(todo) {
       if(todo.groupName.toLowerCase().includes(target.trim().toLowerCase()) || todo.items.toLowerCase().includes(target.trim().toLowerCase())){
-        setTimeout(function(){
-          mainWindow.webContents.send("Search:success", currentID);
-        },100);
-        return true;
+        results.push(currentID);
+        found = true;
       }
       if(currentID === database.todos.length-1){
-        setTimeout(function(){
-          mainWindow.webContents.send("Search:fail")
-        },100)
+        if(found === true){
+          setTimeout(function(){
+            mainWindow.webContents.send("Search:success", results);
+          },100);
+        }else{
+          setTimeout(function(){
+            mainWindow.webContents.send("Search:fail")
+          },100)
+        }
       }
       currentID++;
     });

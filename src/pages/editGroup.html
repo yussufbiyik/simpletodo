@@ -65,7 +65,7 @@
         ipcRenderer.on("targetGroup", (e, data) => {
             dataID = data;
             document.querySelector("#groupName").value = database.todos[data].groupName;
-            var todoItems = database.todos[data].items.replace(/<li>/gm,'').replace(/<\/li>/gm,',\n')
+            var todoItems = database.todos[data].items.replace(/<li>/gm,'').replace(/<\/li>/gm,'\n')
             document.querySelector("#contents").value = todoItems.substring(0, todoItems.length -2);
         });
 

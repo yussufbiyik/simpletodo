@@ -40,8 +40,8 @@
     <!-- Menu End -->
     <div class="uk-container uk-width-2-3@s uk-margin-large-top uk-margin-large-bottom">
             <!-- Example Lists Begin -->
-            <div class="uk-container uk-text-center" uk-filter="target: .js-filter">
-                <ul id="todoFilter" class="uk-subnav uk-subnav-pill">
+            <div uk-filter="target: .js-filter">
+                <ul id="todoFilter" class="uk-subnav uk-subnav-pill uk-flex-center">
                     <li class="uk-active" uk-filter-control><a href="#">All</a></li>
                     <li uk-filter-control=".HIGH"><a href="#">HIGH</a></li>
                     <li uk-filter-control=".MEDIUM"><a href="#">MEDIUM</a></li>
@@ -66,6 +66,8 @@
 <script>
         const electron = require("electron");
         const { ipcRenderer } = electron; 
+        const path = require('path');
+        const fs = require('fs');
 
         let database;
 
@@ -134,8 +136,14 @@
         });
 
         ipcRenderer.on("Search:success", (e, data) => {
+            var dataPath = path.join(__dirname, '../database/todos.json');
+            var database = JSON.parse(fs.readFileSync(dataPath).toString());
             UIkit.notification.closeAll();
-            UIkit.notification({message:`<span uk-icon='icon: warning'></span> <a class="uk-link-heading" href="#todo${data}">Go to first match!</a>`,status:"success"});
+            var results = '<div class="uk-modal-body uk-text-center uk-child-width-1-1" uk-grid><div><h2 class="uk-modal-title uk-text-bold">RESULTS</h2></div><div><hr class="uk-divider-icon"></div>'
+            data.forEach(item => {
+                results = results + `<div><a class="uk-link-heading" href="#todo${item}">${database.todos[item].groupName.toUpperCase()}</a></div>`
+            });
+            UIkit.modal.dialog(results + '</div>');
         })
     </script>
 </body>
