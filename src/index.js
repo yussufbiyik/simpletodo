@@ -15,7 +15,8 @@ const createWindow = () => {
     height: 700,
     webPreferences:{
       nodeIntegration:true
-    }
+    },
+    icon: path.join(__dirname,'./assets/img/icon.ico')
   });
 
   mainWindow.loadFile(path.join(__dirname, './pages/index.html'));
@@ -166,22 +167,8 @@ const createWindow = () => {
 
 const appMenuTemplate = [
   {
-    label:"App",
+    label:"Controls",
     submenu:[
-      {
-        label: "TODO Groups",
-        submenu:[
-          {
-            label: "Add"
-          },
-          {
-            label: "Edit"
-          },
-          {
-            label: "Delete"
-          }
-        ]
-      },
       {
         label:"Reload",
         role:"reload"
@@ -189,15 +176,6 @@ const appMenuTemplate = [
       {
         label:"Close",
         role:"close"
-      }
-    ]
-  },
-  {
-    label:"Development",
-    submenu: [
-      {
-        label:"DevTools",
-        role:"toggleDevTools"
       }
     ]
   }
@@ -230,6 +208,7 @@ function createGroupWindow(){
     },
     autoHideMenuBar:true,
     title:"Add New TODO Group",
+    icon: path.join(__dirname,'./assets/img/icon.ico')
   });
 
   addWindow.loadFile(path.join(__dirname, './pages/addGroup.html'));
@@ -250,6 +229,7 @@ function createEditWindow(){
     },
     autoHideMenuBar:true,
     title:"Edit TODO Group",
+    icon: path.join(__dirname,'./assets/img/icon.ico')
   });
 
   editWindow.loadFile(path.join(__dirname, './pages/editGroup.html'));
