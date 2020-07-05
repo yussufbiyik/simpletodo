@@ -28,8 +28,8 @@ const createWindow = () => {
     var database = JSON.parse(fs.readFileSync(dataPath).toString());
     
     mainWindow.webContents.send("send:todos", database);
-  })
 
+  })
 
   mainWindow.on("close", () => {
     app.quit();
@@ -42,19 +42,19 @@ const createWindow = () => {
     createGroupWindow();
   });
 
-  ipcMain.on("editBtn",(e, data) => {
-    createEditWindow();
-    ipcMain.on("load:editWindow",() => {
-      editWindow.webContents.send("targetGroup", data);
-    })
-  });
-
-  ipcMain.on("delBtn",(e, data) => {
+  ipcMain.on("Group:delete",(e, data) => {
     var database = JSON.parse(fs.readFileSync(dataPath).toString());
     database.todos.splice(data, 1);
     fs.writeFile(dataPath,JSON.stringify(database), function(err,result){if(err){console.log(err)}});
     
     mainWindow.reload()
+  });
+
+  ipcMain.on("editBtn",(e, data) => {
+    createEditWindow();
+    ipcMain.on("load:editWindow",() => {
+      editWindow.webContents.send("targetGroup", data);
+    })
   });
 
   ipcMain.on("Group:edit",(e,data) => {
@@ -121,6 +121,26 @@ const createWindow = () => {
     addWindow.close();
 
     mainWindow.reload();
+  })
+  
+  ipcMain.on("Search:target", (e,target) => {
+    var database = JSON.parse(fs.readFileSync(dataPath).toString());
+
+    var currentID = 0;
+    database.todos.some(function(todo) {
+      if(todo.groupName.toLowerCase().includes(target.trim().toLowerCase()) || todo.items.toLowerCase().includes(target.trim().toLowerCase())){
+        setTimeout(function(){
+          mainWindow.webContents.send("Search:success", currentID);
+        },100);
+        return true;
+      }
+      if(currentID === database.todos.length-1){
+        setTimeout(function(){
+          mainWindow.webContents.send("Search:fail")
+        },100)
+      }
+      currentID++;
+    });
   })
 };
 

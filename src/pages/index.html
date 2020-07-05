@@ -21,12 +21,13 @@
             <a class="uk-navbar-toggle" uk-search-icon uk-toggle="target: .nav-overlay; animation: uk-animation-fade" href="#"></a>
             <div class="nav-overlay uk-navbar-left uk-flex-1" hidden>
               <div class="uk-navbar-item uk-width-expand">
-                  <form class="uk-search uk-search-navbar uk-width-1-1">
-                      <input class="uk-search-input" type="search" placeholder="Search..." autofocus>
+                  <form onsubmit="searchItem()" action="index.html" class="uk-search uk-search-navbar uk-width-1-1">
+                      <input id="search" class="uk-search-input" type="search" placeholder="Search..." autofocus>
                   </form>
               </div>
               <a class="uk-navbar-toggle" uk-close uk-toggle="target: .nav-overlay; animation: uk-animation-fade" href="#"></a>
             </div>
+            <p id="feedback"></p>
           </div>
         </div>
 
@@ -39,7 +40,7 @@
     </div>
     <!-- Menu End -->
     <div class="uk-container uk-width-2-3@s uk-margin-large-top uk-margin-large-bottom" id="todolist">
-
+            
             <div><hr class="uk-divider-icon"></div>
 
             <div>
@@ -62,7 +63,7 @@
         const electron = require("electron");
         const { ipcRenderer } = electron; 
 
-        let ready = false;
+        let database;
 
         let groupAddBtn = document.querySelector("#groupAddBtn");
         groupAddBtn.addEventListener("click", () => {
@@ -70,7 +71,7 @@
         });
 
         function delBtn(id){
-            ipcRenderer.send("delBtn", id);
+            ipcRenderer.send("Group:delete", id);
         };
         function editBtn(id){
             ipcRenderer.send("editBtn", id);
@@ -78,10 +79,11 @@
         
         window.onload = function(){
             ipcRenderer.send("load:mainWindow")
+            ipcRenderer.send("Search:ready")
         }
 
         ipcRenderer.on("send:todos", (e, data) => {
-            let database = data;
+            database = data;
             if(database.todos.length === 0){
                 let message = document.querySelector("#message").innerHTML = "Nothing to List!";
             }else{
@@ -90,7 +92,7 @@
                     let todoList = document.querySelector("#todoList");
                     
                     let todoAsHTML = 
-                    `<div id='${counter}'>
+                    `<div id='todo${counter}'>
                     <div class='uk-card uk-card-default uk-card-hover uk-text-left'>
                     <div class='uk-card-header'>
                     <h3 class='uk-card-title'>
@@ -112,6 +114,22 @@
                     counter++;
                 });
             }
+        });
+
+        function searchItem(){
+            var target = document.querySelector("#search").value;
+
+            ipcRenderer.send("Search:target", target);
+        }
+
+        ipcRenderer.on("Search:fail", () => {
+            UIkit.notification.closeAll();
+            UIkit.notification({message:"<span uk-icon='icon: warning'></span> No results",status:"warning"});
+        });
+
+        ipcRenderer.on("Search:success", (e, data) => {
+            UIkit.notification.closeAll();
+            UIkit.notification({message:`<span uk-icon='icon: warning'></span> <a class="uk-link-heading" href="#todo${data}">Go to first match!</a>`,status:"success"});
         })
     </script>
 </body>
