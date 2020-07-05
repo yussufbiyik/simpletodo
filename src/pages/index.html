@@ -43,8 +43,9 @@
             
             <div><hr class="uk-divider-icon"></div>
 
-            <div>
-                <h1 id="message" class="uk-h1 uk-text-danger uk-text-center"></h1>
+            <div class="uk-text-center">
+                <h1 id="message" class="uk-h1"></h1>
+                <span id="msgExplain" class="uk-text-meta uk-text-danger"></span>
             </div>
             <!-- Example Lists Begin -->
             <div id="todoList" class="uk-child-width-1-1" uk-grid>
@@ -85,7 +86,8 @@
         ipcRenderer.on("send:todos", (e, data) => {
             database = data;
             if(database.todos.length === 0){
-                let message = document.querySelector("#message").innerHTML = "Nothing to List!";
+                document.querySelector("#message").innerHTML = "Nothing to List";
+                document.querySelector("#msgExplain").innerHTML = "You have no todos"
             }else{
                 var counter = 0;
                 database.todos.forEach(todo => {
