@@ -7,7 +7,7 @@ Just an app that I made to learn electronJS
 
 # How to install ?
 
-Go to [releases](https://github.com/yussufjpg/simpletodo/packages) and download the latest release, it will start downloading the app.
+Go to [releases](https://github.com/yussufjpg/simpletodo/releases) and download the latest release, it will start downloading the app.
 
 # How to use ?
 
