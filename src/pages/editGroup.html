@@ -83,7 +83,7 @@
                     UIkit.notification.closeAll();    
                     UIkit.notification({message:"<span uk-icon='icon: warning'></span> No changes made!",status:'warning'});
                 }else{
-                    ipcRenderer.send("Group:edit",`${group} | ${items} | ${dataID} | ${priority.trim()}`)
+                    ipcRenderer.send("Group:edit",`${group} | ${items} | ${dataID} | ${priority}`)
                 }
             }else{
                 UIkit.notification.closeAll();    

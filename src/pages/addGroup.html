@@ -61,7 +61,7 @@
             const items = document.querySelector("#contents").value;
             const priority = document.querySelector("#priority").value;
             if(group && items){
-                ipcRenderer.send("Group:add",`${group} | ${items} | ${priority.trim()}`)
+                ipcRenderer.send("Group:add",`${group} | ${items} | ${priority}`)
             }else{
                 UIkit.notification.closeAll();    
                 UIkit.notification({message:"<span uk-icon='icon: warning'></span> Please fill the form!",status:'warning'});
