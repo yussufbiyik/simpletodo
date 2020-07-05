@@ -20,6 +20,18 @@
   "config": {
     "forge": {
       "packagerConfig": {},
+      "publishers":[
+        {
+          "name": "@electron-forge/publisher-github",
+          "config": {
+            "repository": {
+              "owner": "yussufjpg",
+              "name": "simpletodo"
+            },
+            "prerelease": true
+          }
+        }
+      ],
       "makers": [
         {
           "name": "@electron-forge/maker-squirrel",
