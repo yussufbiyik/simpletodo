@@ -137,24 +137,30 @@ const createWindow = () => {
     var currentID = 0;
     var results = [];
     var found = false;
-    database.todos.some(function(todo) {
-      if(todo.groupName.toLowerCase().includes(target.trim().toLowerCase()) || todo.items.toLowerCase().includes(target.trim().toLowerCase())){
-        results.push(currentID);
-        found = true;
-      }
-      if(currentID === database.todos.length-1){
-        if(found === true){
-          setTimeout(function(){
-            mainWindow.webContents.send("Search:success", results);
-          },100);
-        }else{
-          setTimeout(function(){
-            mainWindow.webContents.send("Search:fail")
-          },100)
+    if(database.todos.length != 0){
+      database.todos.some(function(todo) {
+        if(todo.groupName.toLowerCase().includes(target.trim().toLowerCase()) || todo.items.toLowerCase().includes(target.trim().toLowerCase())){
+          results.push(currentID);
+          found = true;
         }
-      }
-      currentID++;
-    });
+        if(currentID === database.todos.length-1){
+          if(found === true){
+            setTimeout(function(){
+              mainWindow.webContents.send("Search:success", results);
+            },100);
+          }else{
+            setTimeout(function(){
+              mainWindow.webContents.send("Search:noresult")
+            },100)
+          }
+        }
+        currentID++;
+      });
+    }else{
+      setTimeout(function(){
+        mainWindow.webContents.send("Search:fail")
+      },100)
+    }
   })
 };
 

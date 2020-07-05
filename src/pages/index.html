@@ -130,16 +130,21 @@
             ipcRenderer.send("Search:target", target);
         }
 
-        ipcRenderer.on("Search:fail", () => {
+        ipcRenderer.on("Search:noresult", () => {
             UIkit.notification.closeAll();
             UIkit.notification({message:"<span uk-icon='icon: warning'></span> No results",status:"warning"});
+        });
+
+        ipcRenderer.on("Search:fail", () => {
+            UIkit.notification.closeAll();
+            UIkit.notification({message:"<span uk-icon='icon: warning'></span> No items to search from",status:"warning"});
         });
 
         ipcRenderer.on("Search:success", (e, data) => {
             var dataPath = path.join(__dirname, '../database/todos.json');
             var database = JSON.parse(fs.readFileSync(dataPath).toString());
             UIkit.notification.closeAll();
-            var results = '<div class="uk-modal-body uk-text-center uk-child-width-1-1" uk-grid><div><h2 class="uk-modal-title uk-text-bold">RESULTS</h2></div><div><hr class="uk-divider-icon"></div>'
+            var results = '<div class="uk-modal-body uk-text-center uk-child-width-1-1" uk-grid><button class="uk-modal-close-default uk-text-right" type="button" uk-close></button><div><h2 class="uk-modal-title">RESULTS</h2></div><div><hr class="uk-divider-icon"></div>'
             data.forEach(item => {
                 results = results + `<div><a class="uk-link-heading" href="#todo${item}">${database.todos[item].groupName.toUpperCase()}</a></div>`
             });
