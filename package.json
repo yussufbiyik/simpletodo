@@ -1,6 +1,6 @@
 {
-  "name": "electrontodo",
-  "productName": "electrontodo",
+  "name": "simpletodo",
+  "productName": "Simple TODO",
   "version": "1.0.0",
   "description": "Simple TODO App",
   "main": "src/index.js",
