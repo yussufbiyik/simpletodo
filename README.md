@@ -1,4 +1,4 @@
-![LOGO](https://github.com/yussufjpg/simpletodo/blob/master/readme-assets/small-icon.png "Logo")
+![LOGO](https://github.com/yussufjpg/simpletodo/blob/master/readme-assets/xsmall-icon.png "Logo")
 # Simple TODO README
 
 # What is Simple TODO ?
