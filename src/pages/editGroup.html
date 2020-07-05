@@ -28,6 +28,15 @@
                 <label class="uk-form-label" for="form-stacked-text">Items<hr></label>
                 <textarea class="uk-textarea uk-height-small" placeholder="item1,&#13;item2,&#13;item3" id="contents"></textarea>
             </div>
+            <div class="uk-margin">
+                <label class="uk-form-label" for="form-stacked-text">TODO Priority<hr></label>
+                <select id="priority" class="uk-select">
+                    <option>HIGH</option>
+                    <option>MEDIUM</option>
+                    <option>LOW</option>
+                    <option>FINISHED</option>
+                </select>
+            </div>
             <div class="uk-position-bottom-left uk-position-small">
                 <span id="submit" class="uk-button uk-button-primary">Accept</span>
                 <span id="cancel" class="uk-button uk-button-danger">Cancel</span>
@@ -67,13 +76,14 @@
         accptBtn.onclick = function() {
             const group = document.querySelector("#groupName").value;
             const items = document.querySelector("#contents").value;
+            const priority = document.querySelector("#priority").value;
             if(group || items){
                 var todoItems = database.todos[dataID].items.replace(/<li>/gm,'').replace(/<\/li>/gm,',\n')
-                if(group === database.todos[dataID].groupName && items === todoItems.substring(0, todoItems.length -2)){
+                if(group === database.todos[dataID].groupName && items === todoItems.substring(0, todoItems.length -2 && priority === todoItems.priority)){
                     UIkit.notification.closeAll();    
                     UIkit.notification({message:"<span uk-icon='icon: warning'></span> No changes made!",status:'warning'});
                 }else{
-                    ipcRenderer.send("Group:edit",`${group} | ${items} | ${dataID}`)
+                    ipcRenderer.send("Group:edit",`${group} | ${items} | ${dataID} | ${priority.trim()}`)
                 }
             }else{
                 UIkit.notification.closeAll();    

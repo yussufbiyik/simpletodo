@@ -38,17 +38,21 @@
         
     </div>
     <!-- Menu End -->
-    <div class="uk-container uk-width-2-3@s uk-margin-large-top uk-margin-large-bottom" id="todolist">
-            
-            <div><hr class="uk-divider-icon"></div>
-
-            <div class="uk-text-center">
-                <h1 id="message" class="uk-h1"></h1>
-                <span id="msgExplain" class="uk-text-meta uk-text-danger"></span>
-            </div>
+    <div class="uk-container uk-width-2-3@s uk-margin-large-top uk-margin-large-bottom">
             <!-- Example Lists Begin -->
-            <div id="todoList" class="uk-child-width-1-1" uk-grid>
-                
+            <div class="uk-container uk-text-center" uk-filter="target: .js-filter">
+                <ul id="todoFilter" class="uk-subnav uk-subnav-pill">
+                    <li class="uk-active" uk-filter-control><a href="#">All</a></li>
+                    <li uk-filter-control=".HIGH"><a href="#">HIGH</a></li>
+                    <li uk-filter-control=".MEDIUM"><a href="#">MEDIUM</a></li>
+                    <li uk-filter-control=".LOW"><a href="#">LOW</a></li>
+                    <li uk-filter-control=".FINISHED"><a href="#">FINISHED</a></li>
+                </ul>
+
+                <div><hr class="uk-divider-icon"></div>
+
+                <ul id="todoList" class="js-filter uk-child-width-1-1" uk-grid>
+                </ul>
             </div>
             <!-- Example Lists End -->
 
@@ -85,17 +89,17 @@
         ipcRenderer.on("send:todos", (e, data) => {
             database = data;
             if(database.todos.length === 0){
-                document.querySelector("#message").innerHTML = "Nothing to List";
-                document.querySelector("#msgExplain").innerHTML = "You have no todos"
             }else{
                 var counter = 0;
                 database.todos.forEach(todo => {
                     let todoList = document.querySelector("#todoList");
                     
                     let todoAsHTML = 
-                    `<div id='todo${counter}'>
+                    `<li class="${todo.priority}">
+                    <div id='todo${counter}'>
                     <div class='uk-card uk-card-default uk-card-hover uk-text-left'>
                     <div class='uk-card-header'>
+                    <div class="uk-card-badge uk-label">${todo.priority}</div>
                     <h3 class='uk-card-title'>
                     ${todo.groupName}
                     </h3>
@@ -110,7 +114,8 @@
                     </div>                  
                     </div>
                     </div>
-                    </div>`;
+                    </div>
+                    </li>`;
                     todoList.innerHTML = todoList.innerHTML + todoAsHTML;
                     counter++;
                 });

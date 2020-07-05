@@ -39,7 +39,9 @@ const createWindow = () => {
   Menu.setApplicationMenu(appMenu);
 
   ipcMain.on("groupAdd", () => {
-    createGroupWindow();
+    if(typeof addWindow === 'undefined' || addWindow === null){
+      createGroupWindow();
+    }
   });
 
   ipcMain.on("Group:delete",(e, data) => {
@@ -51,10 +53,12 @@ const createWindow = () => {
   });
 
   ipcMain.on("editBtn",(e, data) => {
-    createEditWindow();
-    ipcMain.on("load:editWindow",() => {
-      editWindow.webContents.send("targetGroup", data);
-    })
+    if(typeof editWindow === 'undefined' || editWindow === null){
+      createEditWindow();
+      ipcMain.on("load:editWindow",() => {
+        editWindow.webContents.send("targetGroup", data);
+      })
+    }
   });
 
   ipcMain.on("Group:edit",(e,data) => {
@@ -63,10 +67,12 @@ const createWindow = () => {
     const groupName = data.split("|")[0];
     const itemsArray = data.split("|")[1].split(",");
     const groupID = Number(data.split("|")[2]);
+    const priority = data.split("|")[3];
     
     currentTODO = database.todos[groupID];
     
-    currentTODO.groupName = groupName; //This is much
+    currentTODO.groupName = groupName;
+    currentTODO.priority = priority;
 
     var items;
     var counter = 0;
@@ -95,6 +101,7 @@ const createWindow = () => {
 
     const groupName = data.split("|")[0];
     const itemsArray = data.split("|")[1].split(",");
+    const priorty = data.split("|")[2];
 
     var items;
     var counter = 0;
@@ -111,7 +118,8 @@ const createWindow = () => {
 
     const dataObj = {
       "groupName":groupName.trim(),
-      "items":items
+      "items":items,
+      "priority":priorty
     }
 
     database.todos.push(dataObj);
@@ -202,8 +210,8 @@ app.on('activate', () => {
 function createGroupWindow(){
   addWindow = new BrowserWindow({
     width:500,
-    height:375,
-    frame:false,
+    height:515,
+    frame:true,
     resizable:true,
     webPreferences:{
       nodeIntegration:true
@@ -222,8 +230,8 @@ function createGroupWindow(){
 function createEditWindow(){
   editWindow = new BrowserWindow({
     width:500,
-    height:375,
-    frame:false,
+    height:515,
+    frame:true,
     resizable:true,
     webPreferences:{
       nodeIntegration:true
