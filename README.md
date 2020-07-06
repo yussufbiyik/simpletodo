@@ -1,6 +1,4 @@
 ![LOGO](https://github.com/yussufjpg/simpletodo/blob/master/readme-assets/xsmall-icon.png "Logo")
-# Simple TODO README
-
 # What is Simple TODO ?
 
 Just an app that I made to learn electronJS
@@ -11,9 +9,10 @@ Go to [releases](https://github.com/yussufjpg/simpletodo/releases) and download 
 
 # How to use ?
 
-- So simple, use the top right **plus shaped button** and **fill the form** to create a todo.
-- To **edit** a todo that you crated, use the **pen shaped button** on the **bottom right** **of the** **todo card** and **fill the form.**
+- So simple, use the **plus shaped button on the top right** and **fill the form** to create a todo.
+- To **edit** a todo that you crated, use the **pen shaped button** on the **bottom right of the todo card** and **fill the form.**
 - To **delete** a todo, use the **trash shaped button** on the **bottom right** **of the todo card**.
+- To **mark a todo as done**, use the **tick shaped button** on the **bottom right of the todo card**.
 - To **search** todos, use the **search shaped button** on the **top left of the navbar**, it will open a search bar.
 
 # How to contribute ?
@@ -23,3 +22,6 @@ Go to [releases](https://github.com/yussufjpg/simpletodo/releases) and download 
 3. Now you can edit the code (Sorry for no comment lines this was mostly a personal project but I will add comment lines).
 4. Use `npm start` to test your developments
 5. Finally after finishing and testing use **pull requests** to share your developments.
+
+# Future Plans
+- Divide the code in parts (Helpers & Renderers) to improve readability for future developments and contributions.
