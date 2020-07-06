@@ -17,7 +17,7 @@ Go to [releases](https://github.com/yussufjpg/simpletodo/releases) and download 
 
 # How to contribute ?
 
-1. Type `git clone git@github.com:yussufjpg/simpletodo.git` to your command prompt.
+1. Fork this repo & clone it to your local machine.
 2. After cloning, type `npm install` to install dependencies
 3. Now you can edit the code (Sorry for no comment lines this was mostly a personal project but I will add comment lines).
 4. Use `npm start` to test your developments
