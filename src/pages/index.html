@@ -38,7 +38,7 @@
           <div class="uk-navbar-item">
             <form onsubmit="searchItem()" class="uk-search uk-search-navbar uk-width-1-1">
                 <span uk-search-icon></span>
-                <input class="uk-search-input" type="search" placeholder="Search...">
+                <input id="search" class="uk-search-input" type="search" placeholder="Search...">
               </form>
           </div>
         </div>
@@ -103,7 +103,6 @@
         
         window.onload = function(){
             ipcRenderer.send("load:mainWindow")
-            ipcRenderer.send("Search:ready")
         }
 
         ipcRenderer.on("send:todos", (e, data) => {

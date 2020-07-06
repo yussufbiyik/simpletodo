@@ -23,7 +23,7 @@ const createWindow = () => {
   mainWindow.loadFile(path.join(__dirname, './pages/index.html'));
 
   // Open the DevTools.
-  // mainWindow.webContents.openDevTools();
+  mainWindow.webContents.openDevTools();
 
   ipcMain.on("load:mainWindow",() => {
     
@@ -162,11 +162,11 @@ const createWindow = () => {
           if(found === true){
             setTimeout(function(){
               mainWindow.webContents.send("Search:success", results);
-            },100);
+            },300);
           }else{
             setTimeout(function(){
               mainWindow.webContents.send("Search:noresult")
-            },100)
+            },300)
           }
         }
         currentID++;
@@ -174,7 +174,7 @@ const createWindow = () => {
     }else{
       setTimeout(function(){
         mainWindow.webContents.send("Search:fail")
-      },100)
+      },300)
     }
   })
 };
