@@ -29,6 +29,7 @@ body::-webkit-scrollbar {
     width: 20px;
     height: 20px;
     border-radius: 100%;
+    transition-duration: .2s;
     -webkit-app-region: no-drag;
 }
 
@@ -36,10 +37,22 @@ body::-webkit-scrollbar {
     background-color: #f0506e !important;
 }
 
+.quit:hover{
+    background-color: #702533 !important;
+}
+
 .maximize{
     background-color: #faa05a !important;
 }
 
+.maximize:hover{
+    background-color: #7A4E2C !important;
+}
+
 .minimize{
     background-color: #1e87f0 !important;
+}
+
+.minimize:hover{
+    background-color: #0D3F70 !important;
 }
