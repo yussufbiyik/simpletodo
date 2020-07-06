@@ -15,37 +15,31 @@
     <script src="../assets/uikit/js/uikit-icons.min.js"></script>
 </head>
 <body>
-    <!-- Custom Title Bar Begin-->
-    <div class="uk-navbar titlebar-slim titlebar-moveable" uk-navbar>
-
-        <div class="uk-navbar-left uk-margin-small-left">
-          <img src="../assets/img/icon.ico" width="20" height="20" alt="">
-          <span class="uk-margin-small-left uk-text-meta text-white">Simple TODO</span>
+    <!-- Custom Titlebar Begin-->
+    <div uk-sticky="sel-target: .uk-navbar-container; cls-active: uk-navbar-sticky">
+        <div class="uk-navbar titlebar-slim titlebar-moveable" uk-navbar>
+            <div class="uk-navbar-left uk-margin-small-left">
+            <img src="../assets/img/icon.ico" width="20" height="20" alt="">
+            <span class="uk-margin-small-left uk-text-meta text-white">Simple TODO</span>
+            </div>
+            <div class="uk-navbar-right">
+                <div id="minimize" class="titlebar-button minimize uk-margin-small-right"></div>
+                <div id="fullscreen" class="titlebar-button maximize uk-margin-small-right"></div>
+                <div id="quit" class="titlebar-button quit uk-margin-small-right"></div>
+            </div>
         </div>
-
-        <div class="uk-navbar-right">
-            <div id="minimize" class="titlebar-button minimize uk-margin-small-right"></div>
-            <div id="fullscreen" class="titlebar-button maximize uk-margin-small-right"></div>
-            <div id="quit" class="titlebar-button quit uk-margin-small-right"></div>
-        </div>
-        
     </div>
-    <!-- Custom Title End -->
+    <!-- Custom Titlebar End -->
 
     <!-- Menu Begin -->
     <div class="uk-navbar-container" uk-navbar>
 
         <div class="uk-navbar-left">
           <div class="uk-navbar-item">
-            <a class="uk-navbar-toggle" uk-search-icon uk-toggle="target: .nav-overlay; animation: uk-animation-fade" href="#"></a>
-            <div class="nav-overlay uk-navbar-left uk-flex-1" hidden>
-              <div class="uk-navbar-item uk-width-expand">
-                  <form onsubmit="searchItem()" action="index.html" class="uk-search uk-search-navbar uk-width-1-1">
-                      <input id="search" class="uk-search-input" type="search" placeholder="Search..." autofocus>
-                  </form>
-              </div>
-              <a class="uk-navbar-toggle" uk-close uk-toggle="target: .nav-overlay; animation: uk-animation-fade" href="#"></a>
-            </div>
+            <form onsubmit="searchItem()" class="uk-search uk-search-navbar uk-width-1-1">
+                <span uk-search-icon></span>
+                <input class="uk-search-input" type="search" placeholder="Search...">
+              </form>
           </div>
         </div>
 
@@ -58,7 +52,7 @@
     </div>
     <!-- Menu End -->
     
-    <div class="uk-container uk-width-2-3@s uk-margin-large-top uk-margin-large-bottom">
+    <div id="todos" class="uk-container uk-width-2-3@s uk-margin-large-top uk-margin-large-bottom">
             <!-- Example Lists Begin -->
             <div uk-filter="target: .js-filter">
                 <ul id="todoFilter" class="uk-subnav uk-subnav-pill uk-flex-center">

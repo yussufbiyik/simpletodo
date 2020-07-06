@@ -1,3 +1,7 @@
+body::-webkit-scrollbar {
+    display: none;
+}
+
 .hide-overflow{
     overflow-y: hidden;
     overflow-x: hidden;
