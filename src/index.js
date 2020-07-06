@@ -23,7 +23,7 @@ const createWindow = () => {
   mainWindow.loadFile(path.join(__dirname, './pages/index.html'));
 
   // Open the DevTools.
-  mainWindow.webContents.openDevTools();
+  // mainWindow.webContents.openDevTools();
 
   ipcMain.on("load:mainWindow",() => {
     
