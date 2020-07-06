@@ -12,7 +12,8 @@ if (require('electron-squirrel-startup')) {
 const createWindow = () => {
   const mainWindow = new BrowserWindow({
     width: 900,
-    height: 700,
+    height: 750,
+    frame:false,
     webPreferences:{
       nodeIntegration:true
     },

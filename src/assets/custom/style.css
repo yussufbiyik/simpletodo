@@ -7,3 +7,35 @@
     background-color: #32d296 !important;
     color: White !important;
 }
+
+.titlebar-slim{
+    height: 35px !important;
+    background-color: #0D0D0D;
+}
+
+.titlebar-moveable{
+    -webkit-app-region: drag !important;
+}
+
+.text-white{
+    color: white !important;
+}
+
+.titlebar-button{
+    width: 20px;
+    height: 20px;
+    border-radius: 100%;
+    -webkit-app-region: no-drag;
+}
+
+.quit{
+    background-color: #f0506e !important;
+}
+
+.maximize{
+    background-color: #faa05a !important;
+}
+
+.minimize{
+    background-color: #1e87f0 !important;
+}

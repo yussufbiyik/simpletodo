@@ -7,14 +7,31 @@
     
     <!-- Custom CSS -->
     <link rel="stylesheet" href="../assets/custom/style.css">
+
     <!-- UIkit CSS -->
     <link rel="stylesheet" href="../assets/uikit/css/uikit.min.css" />
-
     <!-- UIkit JS -->
     <script src="../assets/uikit/js/uikit.min.js"></script>
     <script src="../assets/uikit/js/uikit-icons.min.js"></script>
 </head>
 <body>
+    <!-- Custom Title Bar Begin-->
+    <div class="uk-navbar titlebar-slim titlebar-moveable" uk-navbar>
+
+        <div class="uk-navbar-left uk-margin-small-left">
+          <img src="../assets/img/icon.ico" width="20" height="20" alt="">
+          <span class="uk-margin-small-left uk-text-meta text-white">Simple TODO</span>
+        </div>
+
+        <div class="uk-navbar-right">
+            <div id="minimize" class="titlebar-button minimize uk-margin-small-right"></div>
+            <div id="fullscreen" class="titlebar-button maximize uk-margin-small-right"></div>
+            <div id="quit" class="titlebar-button quit uk-margin-small-right"></div>
+        </div>
+        
+    </div>
+    <!-- Custom Title End -->
+
     <!-- Menu Begin -->
     <div class="uk-navbar-container" uk-navbar>
 
@@ -40,6 +57,7 @@
         
     </div>
     <!-- Menu End -->
+    
     <div class="uk-container uk-width-2-3@s uk-margin-large-top uk-margin-large-bottom">
             <!-- Example Lists Begin -->
             <div uk-filter="target: .js-filter">
@@ -67,6 +85,7 @@
 
 <script>
         const electron = require("electron");
+        require('../renderers/renderer.js');
         const { ipcRenderer } = electron; 
         const path = require('path');
         const fs = require('fs');
