@@ -39,12 +39,49 @@ const createWindow = () => {
   const appMenu = Menu.buildFromTemplate(appMenuTemplate);
   Menu.setApplicationMenu(appMenu);
 
+  //Add
   ipcMain.on("groupAdd", () => {
     if(typeof addWindow === 'undefined' || addWindow === null){
       createGroupWindow();
     }
   });
 
+  ipcMain.on("Group:add", (e,data) => {
+    var database = JSON.parse(fs.readFileSync(dataPath).toString());
+
+    const groupName = data.split("|")[0];
+    const itemsArray = data.split("|")[1].split("\n");
+    const priorty = data.split("|")[2];
+
+    var items;
+    var counter = 0;
+    itemsArray.forEach(item => {
+      if(item != ""){
+        if(counter > 0){
+          items = items + `<li>${item.trim()}</li>`;
+        }else{
+          items = `<li>${item.trim()}</li>`;
+        }
+        counter++;
+      }
+    });
+
+    const dataObj = {
+      "groupName":groupName.trim(),
+      "items":items,
+      "priority":priorty
+    }
+
+    database.todos.push(dataObj);
+
+    fs.writeFile(dataPath,JSON.stringify(database), function(err,result){if(err){console.log(err)}});
+
+    addWindow.close();
+
+    mainWindow.reload();
+  })
+
+  // Delete
   ipcMain.on("Group:delete",(e, data) => {
     var database = JSON.parse(fs.readFileSync(dataPath).toString());
     database.todos.splice(data, 1);
@@ -53,6 +90,16 @@ const createWindow = () => {
     mainWindow.reload()
   });
 
+  // Finish
+  ipcMain.on("Group:finish",(e, data) => {
+    var database = JSON.parse(fs.readFileSync(dataPath).toString());
+    database.todos[data].priority = " FINISHED"
+    fs.writeFile(dataPath,JSON.stringify(database), function(err,result){if(err){console.log(err)}});
+    
+    mainWindow.reload()
+  });
+
+  // Edit
   ipcMain.on("editBtn",(e, data) => {
     if(typeof editWindow === 'undefined' || editWindow === null){
       createEditWindow();
@@ -97,41 +144,7 @@ const createWindow = () => {
     mainWindow.reload();
   });
 
-  ipcMain.on("Group:add", (e,data) => {
-    var database = JSON.parse(fs.readFileSync(dataPath).toString());
-
-    const groupName = data.split("|")[0];
-    const itemsArray = data.split("|")[1].split("\n");
-    const priorty = data.split("|")[2];
-
-    var items;
-    var counter = 0;
-    itemsArray.forEach(item => {
-      if(item != ""){
-        if(counter > 0){
-          items = items + `<li>${item.trim()}</li>`;
-        }else{
-          items = `<li>${item.trim()}</li>`;
-        }
-        counter++;
-      }
-    });
-
-    const dataObj = {
-      "groupName":groupName.trim(),
-      "items":items,
-      "priority":priorty
-    }
-
-    database.todos.push(dataObj);
-
-    fs.writeFile(dataPath,JSON.stringify(database), function(err,result){if(err){console.log(err)}});
-
-    addWindow.close();
-
-    mainWindow.reload();
-  })
-  
+  // Search
   ipcMain.on("Search:target", (e,target) => {
     var database = JSON.parse(fs.readFileSync(dataPath).toString());
 
@@ -197,6 +210,7 @@ app.on('activate', () => {
   }
 });
 
+// Create Windows
 function createGroupWindow(){
   addWindow = new BrowserWindow({
     width:500,

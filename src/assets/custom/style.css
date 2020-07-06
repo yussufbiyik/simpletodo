@@ -2,3 +2,8 @@
     overflow-y: hidden;
     overflow-x: hidden;
 }
+
+.button-success{
+    background-color: #32d296 !important;
+    color: White !important;
+}
