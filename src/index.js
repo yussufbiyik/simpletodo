@@ -215,9 +215,9 @@ app.on('activate', () => {
 function createGroupWindow(){
   addWindow = new BrowserWindow({
     width:500,
-    height:515,
-    frame:true,
-    resizable:true,
+    height:550,
+    frame:false,
+    resizable:false,
     webPreferences:{
       nodeIntegration:true
     },
@@ -236,9 +236,9 @@ function createGroupWindow(){
 function createEditWindow(){
   editWindow = new BrowserWindow({
     width:500,
-    height:515,
-    frame:true,
-    resizable:true,
+    height:550,
+    frame:false,
+    resizable:false,
     webPreferences:{
       nodeIntegration:true
     },

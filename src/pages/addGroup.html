@@ -17,7 +17,23 @@
 
 </head>
 <body class="hide-overflow">
-    <div class="uk-container uk-text-left">
+    <!-- Custom Titlebar Begin-->
+    <div uk-sticky="sel-target: .uk-navbar-container; cls-active: uk-navbar-sticky">
+        <div class="uk-navbar titlebar-slim titlebar-moveable" uk-navbar>
+            <div class="uk-navbar-left uk-margin-small-left">
+            <img src="../assets/img/icon.ico" width="20" height="20" alt="">
+            <span class="uk-margin-small-left uk-text-meta text-white">Simple TODO</span>
+            </div>
+            <div class="uk-navbar-right">
+                <div id="minimize" class="titlebar-button minimize uk-margin-small-right"></div>
+                <div id="fullscreen" class="titlebar-button maximize uk-margin-small-right"></div>
+                <div id="quit" class="titlebar-button quit uk-margin-small-right"></div>
+            </div>
+        </div>
+    </div>
+    <!-- Custom Titlebar End -->
+
+    <div class="uk-container uk-text-left uk-margin-small-top">
     <form>
         <fieldset class="uk-fieldset">
             <div class="uk-margin">
@@ -47,6 +63,7 @@
 
     <script>
         const electron = require("electron");
+        require('../renderers/renderer.js');
         const { ipcRenderer } = electron; 
 
         let cancelBtn = document.querySelector("#cancel");

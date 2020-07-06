@@ -14,5 +14,5 @@ document.querySelector('#fullscreen').addEventListener("click", () => {
 })
 
 document.querySelector('#quit').addEventListener("click", () => {
-    remote.app.quit()
+    remote.getCurrentWindow().close();
 })
