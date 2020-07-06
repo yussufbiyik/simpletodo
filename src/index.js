@@ -24,7 +24,7 @@ const createWindow = () => {
   mainWindow.loadFile(path.join(__dirname, './pages/index.html'));
 
   // Open the DevTools.
-   mainWindow.webContents.openDevTools();
+  //mainWindow.webContents.openDevTools();
 
   ipcMain.on("load:mainWindow",() => {
     
@@ -255,7 +255,7 @@ function createEditWindow(){
   });
 
   editWindow.loadFile(path.join(__dirname, './pages/editGroup.html'));
-  editWindow.webContents.openDevTools();
+  //editWindow.webContents.openDevTools();
 
   editWindow.on("close", () => {
     editWindow = null;
