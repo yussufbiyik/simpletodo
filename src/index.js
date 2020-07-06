@@ -15,7 +15,8 @@ const createWindow = () => {
     height: 750,
     frame:false,
     webPreferences:{
-      nodeIntegration:true
+      nodeIntegration:true,
+      enableRemoteModule:true
     },
     icon: path.join(__dirname,'./assets/img/icon.ico')
   });
@@ -23,7 +24,7 @@ const createWindow = () => {
   mainWindow.loadFile(path.join(__dirname, './pages/index.html'));
 
   // Open the DevTools.
-  // mainWindow.webContents.openDevTools();
+   mainWindow.webContents.openDevTools();
 
   ipcMain.on("load:mainWindow",() => {
     
@@ -114,9 +115,10 @@ const createWindow = () => {
     var database = JSON.parse(fs.readFileSync(dataPath).toString());
 
     const groupName = data.split("|")[0];
-    const itemsArray = data.split("|")[1].split(",");
+    const itemsArray = data.split("|")[1].split("\n");
     const groupID = Number(data.split("|")[2]);
     const priority = data.split("|")[3];
+    console.log(itemsArray)
     
     currentTODO = database.todos[groupID];
     
@@ -126,12 +128,14 @@ const createWindow = () => {
     var items;
     var counter = 0;
     itemsArray.forEach(item => {
-      if(item != ""){
+      if(item != "" || item != ' '){
         if(counter > 0){
           items = items + `<li>${item.trim()}</li>`;
         }else{
           items = `<li>${item.trim()}</li>`;
         }
+        counter++;
+      }else{
         counter++;
       }
     });
@@ -219,7 +223,8 @@ function createGroupWindow(){
     frame:false,
     resizable:false,
     webPreferences:{
-      nodeIntegration:true
+      nodeIntegration:true,
+      enableRemoteModule:true
     },
     autoHideMenuBar:true,
     title:"Add New TODO Group",
@@ -227,6 +232,7 @@ function createGroupWindow(){
   });
 
   addWindow.loadFile(path.join(__dirname, './pages/addGroup.html'));
+  //addWindow.webContents.openDevTools();
 
   addWindow.on("close", () => {
     addWindow = null;
@@ -240,7 +246,8 @@ function createEditWindow(){
     frame:false,
     resizable:false,
     webPreferences:{
-      nodeIntegration:true
+      nodeIntegration:true,
+      enableRemoteModule:true
     },
     autoHideMenuBar:true,
     title:"Edit TODO Group",
@@ -248,6 +255,7 @@ function createEditWindow(){
   });
 
   editWindow.loadFile(path.join(__dirname, './pages/editGroup.html'));
+  editWindow.webContents.openDevTools();
 
   editWindow.on("close", () => {
     editWindow = null;

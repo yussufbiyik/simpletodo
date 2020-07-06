@@ -26,7 +26,6 @@
             </div>
             <div class="uk-navbar-right">
                 <div id="minimize" class="titlebar-button minimize uk-margin-small-right"></div>
-                <div id="fullscreen" class="titlebar-button maximize uk-margin-small-right"></div>
                 <div id="quit" class="titlebar-button quit uk-margin-small-right"></div>
             </div>
         </div>
@@ -83,7 +82,8 @@
             dataID = data;
             document.querySelector("#groupName").value = database.todos[data].groupName;
             var todoItems = database.todos[data].items.replace(/<li>/gm,'').replace(/<\/li>/gm,'\n')
-            document.querySelector("#contents").value = todoItems.substring(0, todoItems.length -2);
+            document.querySelector("#contents").value = todoItems;
+            document.querySelector("#priority").value = database.todos[data].priority.trim()
         });
 
         cancelBtn.addEventListener("click",() =>{
@@ -95,12 +95,12 @@
             const items = document.querySelector("#contents").value;
             const priority = document.querySelector("#priority").value;
             if(group || items){
-                var todoItems = database.todos[dataID].items.replace(/<li>/gm,'').replace(/<\/li>/gm,',\n')
-                if(group === database.todos[dataID].groupName && items === todoItems.substring(0, todoItems.length -2 && priority === todoItems.priority)){
+                var todoItems = database.todos[dataID].items.replace(/<li>/gm,'').replace(/<\/li>/gm,'\n')
+                if(group === database.todos[dataID].groupName && items === todoItems && priority === database.todos[dataID].priority.trim()){
                     UIkit.notification.closeAll();    
                     UIkit.notification({message:"<span uk-icon='icon: warning'></span> No changes made!",status:'warning'});
                 }else{
-                    ipcRenderer.send("Group:edit",`${group} | ${items} | ${dataID} | ${priority}`)
+                    ipcRenderer.send("Group:edit",`${group.trim()} | ${items.trim()} | ${dataID} | ${priority.trim()}`)
                 }
             }else{
                 UIkit.notification.closeAll();    
