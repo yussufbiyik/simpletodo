@@ -35,12 +35,13 @@
     <div class="uk-navbar-container" uk-navbar>
 
         <div class="uk-navbar-left">
-          <div class="uk-navbar-item">
-            <form onsubmit="searchItem()" class="uk-search uk-search-navbar uk-width-1-1">
-                <span uk-search-icon></span>
-                <input id="search" class="uk-search-input" type="search" placeholder="Search...">
-              </form>
-          </div>
+            <a uk-toggle="target: #todomenu" class="uk-navbar-toggle" uk-navbar-toggle-icon href="#"></a>
+            <div class="uk-navbar-item">
+                <form onsubmit="searchItem()" class="uk-search uk-search-navbar uk-width-1-1">
+                    <span uk-search-icon></span>
+                    <input id="search" class="uk-search-input" type="search" placeholder="Search...">
+                </form>
+            </div>
         </div>
 
         <div class="uk-navbar-right">
@@ -51,6 +52,18 @@
         
     </div>
     <!-- Menu End -->
+
+    <!-- TODO MENU BEGIN -->
+    <div id="todomenu" uk-offcanvas="mode: reveal; overlay: true">
+        <div class="uk-offcanvas-bar">
+            <button class="uk-offcanvas-close" type="button" uk-close></button>
+            <h3>All TODOs</h3>
+            <ul id="todomenulist" class="uk-nav uk-dropdown-nav">
+                <li class="uk-nav-divider"></li>
+            </ul>
+        </div>
+    </div>
+    <!-- TODO MENU END -->
     
     <div id="todos" class="uk-container uk-width-2-3@s uk-margin-large-top uk-margin-large-bottom">
             <!-- Example Lists Begin -->
@@ -112,6 +125,7 @@
                 var counter = 0;
                 database.todos.forEach(todo => {
                     let todoList = document.querySelector("#todoList");
+                    let todoMenuList = document.querySelector("#todomenulist");
                     
                     let todoAsHTML = 
                     `<li class="${todo.priority}">
@@ -137,6 +151,9 @@
                     </div>
                     </li>`;
                     todoList.innerHTML = todoList.innerHTML + todoAsHTML;
+
+                    todoMenuList.innerHTML = todoMenuList.innerHTML + `<li><a href="#todo${counter}">${todo.groupName}</a></li>`;
+
                     counter++;
                 });
             }
@@ -162,11 +179,11 @@
             var dataPath = path.join(__dirname, '../database/todos.json');
             var database = JSON.parse(fs.readFileSync(dataPath).toString());
             UIkit.notification.closeAll();
-            var results = '<div class="uk-modal-body uk-text-center uk-child-width-1-1" uk-grid><button class="uk-modal-close-default uk-text-right" type="button" uk-close></button><div><h2 class="uk-modal-title">RESULTS</h2></div><div><hr class="uk-divider-icon"></div>'
+            var results = '<div class="uk-modal-body uk-text-center" uk-grid><button class="uk-modal-close-default uk-text-right" type="button" uk-close></button><div><h2 class="uk-modal-title">Results</h2></div><div><hr class="uk-divider-icon"></div><div><ul class="uk-nav uk-dropdown-nav">'
             data.forEach(item => {
-                results = results + `<div><a class="uk-link-heading" href="#todo${item}">${database.todos[item].groupName.toUpperCase()}</a></div>`
+                results = results + `<li><a href="#todo${item}">${database.todos[item].groupName.toUpperCase()}</a></li>`
             });
-            UIkit.modal.dialog(results + '</div>');
+            UIkit.modal.dialog(results + `</ul></div>`);
         })
     </script>
 </body>

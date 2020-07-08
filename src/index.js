@@ -118,7 +118,6 @@ const createWindow = () => {
     const itemsArray = data.split("|")[1].split("\n");
     const groupID = Number(data.split("|")[2]);
     const priority = data.split("|")[3];
-    console.log(itemsArray)
     
     currentTODO = database.todos[groupID];
     
