@@ -24,4 +24,5 @@ Go to [releases](https://github.com/yussufjpg/simpletodo/releases) and download 
 5. Finally after finishing and testing use **pull requests** to share your developments.
 
 # Future Plans
-- Divide the code in parts (Helpers & Renderers) to improve readability for future developments and contributions.
+- Add night mode.
+- Provide gifs to README.md
