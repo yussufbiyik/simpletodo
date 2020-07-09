@@ -8,7 +8,7 @@ Just an app that I made to learn electronJS
 Go to [releases](https://github.com/yussufjpg/simpletodo/releases) and download the latest release, it will start downloading the app.
 
 # How to use ?
-
+![Example Usage](https://github.com/yussufjpg/simpletodo/blob/master/readme-assets/example.gif?raw=true)
 - So simple, use the **plus shaped button on the top right** and **fill the form** to create a todo.
 - To **edit** a todo that you crated, use the **pen shaped button** on the **bottom right of the todo card** and **fill the form.**
 - To **delete** a todo, use the **trash shaped button** on the **bottom right** **of the todo card**.
@@ -26,4 +26,3 @@ Go to [releases](https://github.com/yussufjpg/simpletodo/releases) and download 
 
 # Future Plans
 - Add night mode.
-- Provide gifs to README.md
