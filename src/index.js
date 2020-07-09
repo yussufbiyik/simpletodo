@@ -24,13 +24,13 @@ const createWindow = () => {
   mainWindow.loadFile(path.join(__dirname, './pages/index.html'));
 
   // Open the DevTools.
-  //mainWindow.webContents.openDevTools();
+  // mainWindow.webContents.openDevTools();
 
-  ipcMain.on("load:mainWindow",() => {
+  ipcMain.on("Load:mainWindow",() => {
     
     var database = JSON.parse(fs.readFileSync(dataPath).toString());
     
-    mainWindow.webContents.send("send:todos", database);
+    mainWindow.webContents.send("Send:TODOs", database);
 
   })
 
@@ -42,7 +42,7 @@ const createWindow = () => {
   Menu.setApplicationMenu(appMenu);
 
   //Add
-  ipcMain.on("groupAdd", () => {
+  ipcMain.on("Group:OpenAddWindow", () => {
     if(typeof addWindow === 'undefined' || addWindow === null){
       createGroupWindow();
     }
@@ -84,7 +84,7 @@ const createWindow = () => {
   })
 
   // Delete
-  ipcMain.on("Group:delete",(e, data) => {
+  ipcMain.on("Group:Delete",(e, data) => {
     var database = JSON.parse(fs.readFileSync(dataPath).toString());
     database.todos.splice(data, 1);
     fs.writeFile(dataPath,JSON.stringify(database), function(err,result){if(err){console.log(err)}});
@@ -93,7 +93,7 @@ const createWindow = () => {
   });
 
   // Finish
-  ipcMain.on("Group:finish",(e, data) => {
+  ipcMain.on("Group:Finish",(e, data) => {
     var database = JSON.parse(fs.readFileSync(dataPath).toString());
     database.todos[data].priority = " FINISHED"
     fs.writeFile(dataPath,JSON.stringify(database), function(err,result){if(err){console.log(err)}});
@@ -102,11 +102,11 @@ const createWindow = () => {
   });
 
   // Edit
-  ipcMain.on("editBtn",(e, data) => {
+  ipcMain.on("Group:OpenEditWindow",(e, data) => {
     if(typeof editWindow === 'undefined' || editWindow === null){
       createEditWindow();
-      ipcMain.on("load:editWindow",() => {
-        editWindow.webContents.send("targetGroup", data);
+      ipcMain.on("Load:editWindow",() => {
+        editWindow.webContents.send("Send:TargetGroup", data);
       })
     }
   });
@@ -149,7 +149,7 @@ const createWindow = () => {
   });
 
   // Search
-  ipcMain.on("Search:target", (e,target) => {
+  ipcMain.on("Search:Target", (e,target) => {
     var database = JSON.parse(fs.readFileSync(dataPath).toString());
 
     var currentID = 0;
@@ -164,11 +164,11 @@ const createWindow = () => {
         if(currentID === database.todos.length-1){
           if(found === true){
             setTimeout(function(){
-              mainWindow.webContents.send("Search:success", results);
+              mainWindow.webContents.send("Search:Success", results);
             },300);
           }else{
             setTimeout(function(){
-              mainWindow.webContents.send("Search:noresult")
+              mainWindow.webContents.send("Search:NoResult")
             },300)
           }
         }
@@ -176,7 +176,7 @@ const createWindow = () => {
       });
     }else{
       setTimeout(function(){
-        mainWindow.webContents.send("Search:fail")
+        mainWindow.webContents.send("Search:Fail")
       },300)
     }
   })

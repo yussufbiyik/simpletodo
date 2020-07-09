@@ -37,7 +37,7 @@
         <div class="uk-navbar-left">
             <a uk-toggle="target: #todomenu" class="uk-navbar-toggle" uk-navbar-toggle-icon href="#"></a>
             <div class="uk-navbar-item">
-                <form onsubmit="searchItem()" class="uk-search uk-search-navbar uk-width-1-1">
+                <form id="searchForm" class="uk-search uk-search-navbar uk-width-1-1">
                     <span uk-search-icon></span>
                     <input id="search" class="uk-search-input" type="search" placeholder="Search...">
                 </form>
@@ -46,7 +46,7 @@
 
         <div class="uk-navbar-right">
             <div class="uk-navbar-item">
-              <a id="groupAddBtn" class="uk-icon uk-text-primary" uk-icon="plus-circle"></a>
+              <a onclick="addBtn()" id="groupAddBtn" class="uk-icon uk-text-primary" uk-icon="plus-circle"></a>
             </div>
         </div>
         
@@ -91,100 +91,31 @@
     </div>
 
 <script>
+        // Require electron
         const electron = require("electron");
-        require('../renderers/renderer.js');
         const { ipcRenderer } = electron; 
-        const path = require('path');
-        const fs = require('fs');
 
-        let database;
+        // Require needed helpers
+        require('../Helpers/titlebar.js');
+        require('../Helpers/todoListHelper.js');
+        require('../Helpers/searchHelper.js');
 
-        let groupAddBtn = document.querySelector("#groupAddBtn");
-        groupAddBtn.addEventListener("click", () => {
-            ipcRenderer.send("groupAdd");
-        });
-
+        // OnClick Functions
+        function addBtn(){
+            ipcRenderer.send("Group:OpenAddWindow");
+        }
         function delBtn(id){
-            ipcRenderer.send("Group:delete", id);
-        };
+            ipcRenderer.send("Group:Delete", id);
+        }
         function editBtn(id){
-            ipcRenderer.send("editBtn", id);
-        };
+            ipcRenderer.send("Group:OpenEditWindow", id);
+        }
         function fnshBtn(id){
-            ipcRenderer.send("Group:finish", id);
-        };
-        
+            ipcRenderer.send("Group:Finish", id);
+        }
         window.onload = function(){
-            ipcRenderer.send("load:mainWindow")
+            ipcRenderer.send("Load:mainWindow")
         }
-
-        ipcRenderer.on("send:todos", (e, data) => {
-            database = data;
-            if(database.todos.length === 0){
-            }else{
-                var counter = 0;
-                database.todos.forEach(todo => {
-                    let todoList = document.querySelector("#todoList");
-                    let todoMenuList = document.querySelector("#todomenulist");
-                    
-                    let todoAsHTML = 
-                    `<li class="${todo.priority}">
-                    <div id='todo${counter}'>
-                    <div class='uk-card uk-card-default uk-card-hover uk-text-left'>
-                    <div class='uk-card-header'>
-                    <div class="uk-card-badge uk-label">${todo.priority}</div>
-                    <h3 class='uk-card-title'>
-                    ${todo.groupName}
-                    </h3>
-                    </div>
-                    <div class='uk-card-body'>
-                    <ul class='uk-list uk-list-striped'>
-                    ${todo.items}
-                    </ul>
-                    <div class='uk-align-right'>
-                    <a onclick='fnshBtn(${counter})' id='fnshBtn' class='uk-icon-button button-success uk-margin-small-right' uk-icon='check'></a> 
-                    <a onclick='editBtn(${counter})' id='editBtn' class='uk-icon-button uk-button-primary uk-margin-small-right' uk-icon='pencil'></a>
-                    <a onclick='delBtn(${counter})' id='delBtn' class='uk-icon-button uk-button-danger' uk-icon='trash'></a>                        
-                    </div>                  
-                    </div>
-                    </div>
-                    </div>
-                    </li>`;
-                    todoList.innerHTML = todoList.innerHTML + todoAsHTML;
-
-                    todoMenuList.innerHTML = todoMenuList.innerHTML + `<li><a href="#todo${counter}">${todo.groupName}</a></li>`;
-
-                    counter++;
-                });
-            }
-        });
-
-        function searchItem(){
-            var target = document.querySelector("#search").value;
-
-            ipcRenderer.send("Search:target", target);
-        }
-
-        ipcRenderer.on("Search:noresult", () => {
-            UIkit.notification.closeAll();
-            UIkit.notification({message:"<span uk-icon='icon: warning'></span> No results",status:"warning"});
-        });
-
-        ipcRenderer.on("Search:fail", () => {
-            UIkit.notification.closeAll();
-            UIkit.notification({message:"<span uk-icon='icon: warning'></span> No items to search from",status:"warning"});
-        });
-
-        ipcRenderer.on("Search:success", (e, data) => {
-            var dataPath = path.join(__dirname, '../database/todos.json');
-            var database = JSON.parse(fs.readFileSync(dataPath).toString());
-            UIkit.notification.closeAll();
-            var results = '<div class="uk-modal-body uk-text-center" uk-grid><button class="uk-modal-close-default uk-text-right" type="button" uk-close></button><div><h2 class="uk-modal-title">Results</h2></div><div><hr class="uk-divider-icon"></div><div><ul class="uk-nav uk-dropdown-nav">'
-            data.forEach(item => {
-                results = results + `<li><a href="#todo${item}">${database.todos[item].groupName.toUpperCase()}</a></li>`
-            });
-            UIkit.modal.dialog(results + `</ul></div>`);
-        })
     </script>
 </body>
 </html>

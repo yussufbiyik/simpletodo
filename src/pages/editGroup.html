@@ -54,7 +54,7 @@
             </div>
             <div class="uk-position-bottom-left uk-position-small">
                 <span id="submit" class="uk-button uk-button-primary">Accept</span>
-                <span id="cancel" class="uk-button uk-button-danger">Cancel</span>
+                <span onclick="window.close()" id="cancel" class="uk-button uk-button-danger">Cancel</span>
             </div>
         </fieldset>
     </form>
@@ -62,51 +62,10 @@
 
     <script>
         const electron = require("electron");
-        require('../renderers/renderer.js');
-        const { ipcRenderer } = electron; 
-        const path = require('path');
-        const fs = require('fs');
 
-        let cancelBtn = document.querySelector("#cancel");
-        let accptBtn = document.querySelector("#submit");
-
-        dataPath = path.join(__dirname, '../database/todos.json');
-        var database = JSON.parse(fs.readFileSync(dataPath).toString());
-        var dataID;
-
-        window.onload = function(){
-            ipcRenderer.send("load:editWindow");
-        }
-
-        ipcRenderer.on("targetGroup", (e, data) => {
-            dataID = data;
-            document.querySelector("#groupName").value = database.todos[data].groupName;
-            var todoItems = database.todos[data].items.replace(/<li>/gm,'').replace(/<\/li>/gm,'\n')
-            document.querySelector("#contents").value = todoItems;
-            document.querySelector("#priority").value = database.todos[data].priority.trim()
-        });
-
-        cancelBtn.addEventListener("click",() =>{
-            window.close()
-        });
-
-        accptBtn.onclick = function() {
-            const group = document.querySelector("#groupName").value;
-            const items = document.querySelector("#contents").value;
-            const priority = document.querySelector("#priority").value;
-            if(group || items){
-                var todoItems = database.todos[dataID].items.replace(/<li>/gm,'').replace(/<\/li>/gm,'\n')
-                if(group === database.todos[dataID].groupName && items === todoItems && priority === database.todos[dataID].priority.trim()){
-                    UIkit.notification.closeAll();    
-                    UIkit.notification({message:"<span uk-icon='icon: warning'></span> No changes made!",status:'warning'});
-                }else{
-                    ipcRenderer.send("Group:edit",`${group.trim()} | ${items.trim()} | ${dataID} | ${priority.trim()}`)
-                }
-            }else{
-                UIkit.notification.closeAll();    
-                UIkit.notification({message:"<span uk-icon='icon: warning'></span> Form is empty!",status:'warning'});
-            }
-        }
+        // Require needed helpers
+        require('../Helpers/titlebar.js');
+        require('../Helpers/todoEditHelper.js');
     </script>
 </body>
 </html>

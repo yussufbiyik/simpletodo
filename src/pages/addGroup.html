@@ -54,7 +54,7 @@
             </div>
             <div class="uk-position-bottom-left uk-position-small">
                 <span id="submit" class="uk-button uk-button-primary">Add</span>
-                <span id="cancel" class="uk-button uk-button-danger">Cancel</span>
+                <span onclick="window.close()" id="cancel" class="uk-button uk-button-danger">Cancel</span>
             </div>
         </fieldset>
     </form>
@@ -62,27 +62,9 @@
 
     <script>
         const electron = require("electron");
-        require('../renderers/renderer.js');
-        const { ipcRenderer } = electron; 
-
-        let cancelBtn = document.querySelector("#cancel");
-        let addBtn = document.querySelector("#submit");
-
-        cancelBtn.addEventListener("click",() =>{
-            window.close()
-        });
-
-        addBtn.onclick = function() {
-            const group = document.querySelector("#groupName").value;
-            const items = document.querySelector("#contents").value;
-            const priority = document.querySelector("#priority").value;
-            if(group && items){
-                ipcRenderer.send("Group:add",`${group} | ${items} | ${priority}`)
-            }else{
-                UIkit.notification.closeAll();    
-                UIkit.notification({message:"<span uk-icon='icon: warning'></span> Please fill the form!",status:'warning'});
-            }
-        }
+        // Require needed helpers
+        require('../Helpers/titlebar.js');
+        require('../Helpers/todoAddHelper.js');
     </script>
 </body>
 </html>
