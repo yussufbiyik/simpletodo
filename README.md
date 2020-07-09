@@ -22,7 +22,7 @@ Go to [releases](https://github.com/yussufjpg/simpletodo/releases) and download 
 3. Now you can edit the code (Sorry for no comment lines this was mostly a personal project but I will add comment lines).
 4. Use `npm start` to test your developments
 5. Finally after finishing and testing use **pull requests** to share your developments.
-- Tip: You can use VScode [Better Comments extension](https://marketplace.visualstudio.com/items?itemName=aaron-bond.better-comments) to highlight comment lines
+> Tip: You can use VScode [Better Comments extension](https://marketplace.visualstudio.com/items?itemName=aaron-bond.better-comments) to highlight comment lines
 
 # Future Plans
 - Add night mode.
