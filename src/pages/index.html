@@ -64,6 +64,13 @@
         </div>
     </div>
     <!-- TODO MENU END -->
+
+    <!-- Context Menu Begin -->
+    <div id="context-menu-0" class="context-menu">
+        <div id="context-item-print" class="context-menu-item">Print</div>
+        <div id="context-item-export" class="context-menu-item">Export as CSV</div>
+    </div>
+    <!-- Context Menu End -->
     
     <div id="todos" class="uk-container uk-width-2-3@s uk-margin-large-top uk-margin-large-bottom">
             <!-- Example Lists Begin -->
@@ -99,6 +106,7 @@
         require('../Helpers/titlebar.js');
         require('../Helpers/todoListHelper.js');
         require('../Helpers/searchHelper.js');
+        require('../Helpers/contextMenuHelper.js');
 
         // OnClick Functions
         function addBtn(){
