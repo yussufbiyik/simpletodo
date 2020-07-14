@@ -29,4 +29,4 @@ Go to [releases](https://github.com/yussufjpg/simpletodo/releases) and download 
 - Color supported printing.
 
 # Credits
-- Context menu is from one of the videos of IG:@solcode_solutions ([Original Post](https://www.instagram.com/p/CCBmgiGgcGY/))
+- Context menu is slightly modified version of IG:@solcode_solutions's context menu ([Instagram Post](https://www.instagram.com/p/CCBmgiGgcGY/) [Inspect in Codepen](https://codepen.io/MatthewHu/pen/JjGrjKo))
