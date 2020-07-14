@@ -26,3 +26,7 @@ Go to [releases](https://github.com/yussufjpg/simpletodo/releases) and download 
 
 # Future Plans
 - Add night mode.
+- Color supported printing.
+
+# Credits
+- Context menu is from one of the videos of IG:@solcode_solutions ([Original Post](https://www.instagram.com/p/CCBmgiGgcGY/))
