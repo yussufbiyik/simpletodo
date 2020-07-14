@@ -52,7 +52,7 @@ let exportBtn = document.querySelector("#context-item-export")
 
 //* Printing TODOs (WIP)
 printBtn.addEventListener("click",function(){
-    window.print()
+    ipcRenderer.send("Go:HomePrintable")
 })
 
 //* Exporting TODOs as a CSV file

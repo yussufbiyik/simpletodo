@@ -1,7 +1,7 @@
 {
   "name": "simpletodo",
   "productName": "Simple TODO",
-  "version": "1.6.0",
+  "version": "1.6.3",
   "description": "Simple TODO App",
   "main": "src/index.js",
   "scripts": {

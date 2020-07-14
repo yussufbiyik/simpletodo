@@ -26,12 +26,17 @@ const createWindow = () => {
   // Open the DevTools.
    mainWindow.webContents.openDevTools();
 
-  ipcMain.on("Load:mainWindow",() => {
-    
-    var database = JSON.parse(fs.readFileSync(dataPath).toString());
-    
-    mainWindow.webContents.send("Send:TODOs", database);
+  ipcMain.on("Go:HomePrintable",() => {
+    mainWindow.loadFile(path.join(__dirname, './pages/printableTODOs.html'));
+  })
 
+  ipcMain.on("Go:Home",() => {
+    mainWindow.loadFile(path.join(__dirname, './pages/index.html'));
+  })
+
+  ipcMain.on("Load:TODOs",() => {
+    var database = JSON.parse(fs.readFileSync(dataPath).toString());
+    mainWindow.webContents.send("Send:TODOs", database);
   })
 
   mainWindow.on("close", () => {

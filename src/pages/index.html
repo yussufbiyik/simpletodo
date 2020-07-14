@@ -96,7 +96,7 @@
                 <a class="uk-align-right uk-icon-button" uk-icon="icon: chevron-up;ratio: 2;" href="" uk-scroll></a>
             </div>
     </div>
-
+    <span id="pageTitle" style="visibility:hidden;">home</span>
 <script>
         // Require electron
         const electron = require("electron");
@@ -122,7 +122,7 @@
             ipcRenderer.send("Group:Finish", id);
         }
         window.onload = function(){
-            ipcRenderer.send("Load:mainWindow")
+            ipcRenderer.send("Load:TODOs")
         }
     </script>
 </body>
