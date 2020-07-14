@@ -46,7 +46,8 @@
 
         <div class="uk-navbar-right">
             <div class="uk-navbar-item">
-              <a onclick="addBtn()" id="groupAddBtn" class="uk-icon uk-text-primary" uk-icon="plus-circle"></a>
+                <a onclick="openInfo()" id="groupAddBtn" class="uk-icon uk-text-primary uk-margin-small-right" uk-icon="info"></a>
+                <a onclick="addBtn()" id="groupAddBtn" class="uk-icon uk-text-primary" uk-icon="plus-circle"></a>
             </div>
         </div>
         
@@ -120,6 +121,24 @@
         }
         function fnshBtn(id){
             ipcRenderer.send("Group:Finish", id);
+        }
+        function openInfo(){
+            const info = `<div class="uk-modal-body">
+                <h4 class="uk-margin-remove">General<hr></h4>
+                <ul class="uk-list">
+                    <li>Right click to anywhere in the main page to open context menu.</li>
+                    <li>To print all of your todos, use the context menu "Print" button, it will automatically redirect to a printable page.</li>
+                    <li>To export all of your todos, use the "Export" button in context menu.</li>
+                </ul>
+                <h4 class="uk-margin-remove">Working with TODOs<hr></h4>
+                <ul class="uk-list">
+                    <li>To add a todo, use the <a class="uk-icon uk-text-primary" uk-icon="plus-circle"></a> button in the navbar, it will open a window then fill the form in the window.</li>
+                    <li>To edit a todo, use the <a class="uk-icon uk-text-primary" uk-icon="pencil"></a> button in the todo card, it will open a window then fill the form in the window.</li>
+                    <li>To mark a todo as finished, use the <a class="uk-icon uk-text-success" uk-icon="check"></a> button in the todo card, it will mark it as finished.</li>
+                    <li>To delete a todo, use the <a class="uk-icon uk-text-danger" uk-icon="trash"></a> button in the todo card, it will delete that todo card.</li>
+                </ul>
+            </div>`
+            UIkit.modal.dialog(info)
         }
         window.onload = function(){
             ipcRenderer.send("Load:TODOs")

@@ -33,7 +33,17 @@ ipcRenderer.on("Search:Success", (e, data) => {
     UIkit.notification.closeAll();
 
     // Create a UIkit modal to list results in it
-    var results = '<div class="uk-modal-body uk-text-center" uk-grid><button class="uk-modal-close-default uk-text-right" type="button" uk-close></button><div><h2 class="uk-modal-title">Results</h2></div><div></div><div><ul class="uk-nav uk-dropdown-nav"><li class="uk-nav-divider"></li>'
+    var results = `<div class="uk-modal-body uk-text-center" uk-grid>
+    <button class="uk-modal-close-default uk-text-right" type="button" uk-close></button>
+    <div>
+        <h2 class="uk-modal-title">Results</h2>
+    </div>
+    <div>
+    </div>
+    <div>
+    <ul class="uk-nav uk-dropdown-nav">
+        <li class="uk-nav-divider"></li>`;
+        
     // Create a list item for every result
     data.forEach(item => {
         results = results + `<li><a href="#todo${item}">${database.todos[item].groupName.toUpperCase()}</a></li><li class="uk-nav-divider"></li>`

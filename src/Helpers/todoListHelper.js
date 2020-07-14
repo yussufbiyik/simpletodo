@@ -15,26 +15,26 @@ ipcRenderer.on("Send:TODOs", (e, data) => {
                 // Generate HTML output
                 let todoAsHTML = 
                 `<li class="${todo.priority}">
-                <div id='todo${counter}'>
-                <div class='uk-card uk-card-default uk-card-hover uk-text-left'>
-                <div class='uk-card-header'>
-                <div class="uk-card-badge uk-label">${todo.priority}</div>
-                <h3 class='uk-card-title'>
-                ${todo.groupName}
-                </h3>
-                </div>
-                <div class='uk-card-body'>
-                <ul class='uk-list uk-list-striped'>
-                ${todo.items}
-                </ul>
-                <div class='uk-align-right'>
-                <a onclick='fnshBtn(${counter})' id='fnshBtn' class='uk-icon-button button-success uk-margin-small-right' uk-icon='check'></a> 
-                <a onclick='editBtn(${counter})' id='editBtn' class='uk-icon-button uk-button-primary uk-margin-small-right' uk-icon='pencil'></a>
-                <a onclick='delBtn(${counter})' id='delBtn' class='uk-icon-button uk-button-danger' uk-icon='trash'></a>                        
-                </div>                  
-                </div>
-                </div>
-                </div>
+                    <div id='todo${counter}'>
+                        <div class='uk-card uk-card-default uk-card-hover uk-text-left'>
+                            <div class='uk-card-header'>
+                                <div class="uk-card-badge uk-label">${todo.priority}</div>
+                                <h3 class='uk-card-title'>
+                                ${todo.groupName}
+                                </h3>
+                            </div>
+                            <div class='uk-card-body'>
+                                <ul class='uk-list uk-list-striped'>
+                                    ${todo.items}
+                                </ul>
+                                <div class='uk-align-right'>
+                                    <a onclick='fnshBtn(${counter})' id='fnshBtn' class='uk-icon-button button-success uk-margin-small-right' uk-icon='check'></a> 
+                                    <a onclick='editBtn(${counter})' id='editBtn' class='uk-icon-button uk-button-primary uk-margin-small-right' uk-icon='pencil'></a>
+                                    <a onclick='delBtn(${counter})' id='delBtn' class='uk-icon-button uk-button-danger' uk-icon='trash'></a>                        
+                                </div>                  
+                            </div>
+                        </div>
+                    </div>
                 </li>`;
 
                 // Fill the todo list
@@ -60,19 +60,19 @@ ipcRenderer.on("Send:TODOs", (e, data) => {
                 let todoAsHTML = 
                 `<li class="${todo.priority}">
                 <div>
-                <div class='uk-card uk-text-left'>
-                <div class='uk-card-header'>
-                <div class="uk-card-badge uk-label">${todo.priority}</div>
-                <h3 class='uk-card-title'>
-                ${todo.groupName}
-                </h3>
-                </div>
-                <div class='uk-card-body'>
-                <ul class='uk-list uk-list-striped'>
-                ${todo.items}
-                </ul>                
-                </div>
-                </div>
+                    <div class='uk-card uk-text-left'>
+                        <div class='uk-card-header'>
+                            <div class="uk-card-badge uk-label">${todo.priority}</div>
+                            <h3 class='uk-card-title'>
+                            ${todo.groupName}
+                            </h3>
+                        </div>
+                        <div class='uk-card-body'>
+                            <ul class='uk-list uk-list-striped'>
+                            ${todo.items}
+                            </ul>                
+                        </div>
+                    </div>
                 </div>
                 </li>
                 <div><hr></div>`;

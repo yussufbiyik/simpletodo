@@ -50,9 +50,19 @@ function toggleContextMenu(id,action, e) {
 let printBtn = document.querySelector("#context-item-print")
 let exportBtn = document.querySelector("#context-item-export")
 
-//* Printing TODOs (WIP)
+//* Printing TODOs
 printBtn.addEventListener("click",function(){
-    ipcRenderer.send("Go:HomePrintable")
+    dataPath = path.join(__dirname, '../database/todos.json');
+    var database = JSON.parse(fs.readFileSync(dataPath).toString());
+
+    // Show UIkit notification if there are no todos
+    if(database.todos.length === 0){
+        UIkit.notification.closeAll();
+        UIkit.notification({message:"<span uk-icon='icon: warning'></span> No items to print",status:"warning"})
+    }else{
+        // Go to printable home page
+        ipcRenderer.send("Go:HomePrintable")
+    }
 })
 
 //* Exporting TODOs as a CSV file
