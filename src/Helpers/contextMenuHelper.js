@@ -2,17 +2,15 @@ const { ipcRenderer, webContents } = electron;
 const path = require('path');
 const fs = require('fs');
 
-if (document.addEventListener) {
+if (document.addEventListener){
     document.addEventListener("contextmenu", function (e) {
         toggleContextMenu("context-menu-0","open", e);
-        e.preventDefault();
     }, false);
     
     document.addEventListener("click", function (e) {
         toggleContextMenu("context-menu-0","close", e);
-        e.preventDefault();
     }, false);
-} else {
+}else{
     document.attachEvent("oncontextmenu", function () {
         toggleContextMenu("context-menu-0","open", e);
         window.event.returnValue = false;
@@ -20,11 +18,10 @@ if (document.addEventListener) {
     
     document.addEventListener("click", function (e) {
         toggleContextMenu("context-menu-0","close", e);
-        e.preventDefault();
     }, false);
 }
 
-function toggleContextMenu(id,action, e) {
+function toggleContextMenu(id,action, e){
     let menu = document.getElementById(id);
 
     if(action === "open"){
