@@ -4,8 +4,8 @@ const { ipcRenderer } = electron;
 ipcRenderer.on("Send:TODOs", (e, data) => {
     if(document.querySelector('#pageTitle').innerHTML === 'home'){
         // Check if there are TODOs
-        if(data.todos.length === 0){
-        }else{
+        if(data.todos.length != 0){
+            
             var counter = 0;
             data.todos.forEach(todo => {
                 // Select todo lists
@@ -49,8 +49,7 @@ ipcRenderer.on("Send:TODOs", (e, data) => {
     }
     if(document.querySelector('#pageTitle').innerHTML === 'homePrintable'){
         // Check if there are TODOs
-        if(data.todos.length === 0){
-        }else{
+        if(data.todos.length != 0){
             var counter = 0;
             data.todos.forEach(todo => {
                 // Select todo lists
